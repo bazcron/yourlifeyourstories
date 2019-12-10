@@ -1,13 +1,13 @@
 <template>
-  <div id="app">
-    <b-navbar toggleable="md" variant="dark" type="dark">
+  <div id="app" style="color:black">
+    <b-navbar toggleable="md"  variant="dark" type="dark">
       <b-navbar-toggle target="nav_collapse"></b-navbar-toggle>
-      <img src="./assets/mevnnav.png" class="img-circle" style="padding: 5px">
-      <b-navbar-brand to="/">Agree OR Disagree</b-navbar-brand>
+      <img src="./assets/AgreeOrDisagreeIcon.png" class="img-circle" style="padding: 5px">
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav>
           <b-nav-item to="/#"><i class="fa fa-home" style="padding: 5px"> Home</i></b-nav-item>
-          <b-nav-item to="/donations"><i class="fa fa-list" style="padding: 5px"> The Quiz</i></b-nav-item>
+          <b-nav-item to="/donations"><i class="fa fa-question" style="padding: 5px"> The Quiz</i></b-nav-item>
+          <b-nav-item to="/donations"><i class="fa fa-plus" style="padding: 5px"> Add a Statement</i></b-nav-item>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/login"><i class="fa fa-sign-in" style="padding: 5px"> Login </i></b-nav-item>
