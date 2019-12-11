@@ -10,7 +10,7 @@
               <label class="form__label">Add a Statement to the Survey</label>
               <input class="form__input" v-model.trim="$v.statement.$model"/>
             </div>
-            <p>If You Agree with or Disagree with your Statement, put a number in the boxes below.</p>
+            <p>Do you Agree or Disagree with your Statement, put a number in the box below.</p>
               <div class="form-group" :class="{ 'form-group--error': $v.agree.$error }">
               <label class="form-control-label" name="agree">agree (Enter a number)</label>
               <input class="form__input" type="number" v-model.trim="agree"/>
