@@ -35,10 +35,6 @@
     font-weight: 200;
     font-size: 2.5rem;
   }
-  #app1 {
-    width: 60%;
-    margin: 0 auto;
-  }
   .vue-title {
     font-size: 70pt;
     margin-bottom: 10px;

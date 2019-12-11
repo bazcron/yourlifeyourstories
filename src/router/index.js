@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
 import TheQuiz from '@/components/TheQuiz'
+import AddStatement from '@/components/AddStatement'
+
 Vue.use(Router)
 
 export default new Router({
@@ -12,9 +14,14 @@ export default new Router({
       component: Home
     },
     {
-      path: '/donations',
+      path: '/quiz',
       name: 'TheQuiz',
       component: TheQuiz
+    },
+    {
+      path: '/addStatement',
+      name: 'AddStatement',
+      component: AddStatement
     }
   ]
 })
