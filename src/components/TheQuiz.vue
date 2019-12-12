@@ -1,5 +1,8 @@
 <template>
   <div class="hero">
+    <div id="example-1">
+      <button v-on:click="signInAsAdmin">Sign in as Admin</button>
+    </div>
     <h3 class="vue-title"><i class="fa fa-question" style="padding: 3px"></i>{{messagetitle}}</h3>
     <div id="app1">
       <v-client-table :columns="columns" :data="statements" :options="options">
@@ -12,21 +15,35 @@
 </template>
 
 <script>
+
 import QuizService from '@/services/theQuiz'
 import Vue from 'vue'
 import VueTables from 'vue-tables-2'
 
-Vue.use(VueTables.ClientTable, {compileTemplates: true, filterByColumn: false}) //, perPage: 1
+Vue.use(VueTables.ClientTable, {compileTemplates: true, filterByColumn: false, search: true}) //, perPage: 1
+
+// var passwordCorrect = false
+// var yes
+
+if (this.passwordCorrect === 'true') {
+  this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Remove']
+} else {
+  this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree']
+}
 
 export default {
   name: 'Statements',
+  // el: '#example-1',
   data () {
     return {
+      passwordCorrect: 'false',
+      counter: 0,
       messagetitle: ' The Survey ',
       statements: [],
       props: ['_id'],
       errors: [],
-      columns: ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Remove'],
+      // columns: yes,
+      columns: ['statement', 'agree', 'disagree', 'Agree', 'Disagree'],
       options: {
         headings: {
           statement: 'Statement',
@@ -76,9 +93,9 @@ export default {
           console.log(error)
         })
     },
-    deleteStatement: function (id) {
+    signInAsAdmin: function () {
       this.$swal({
-        title: 'To Delete this Statement... Please Enter the password',
+        title: 'Enter Password',
         input: 'password',
         inputPlaceholder: 'Type password here',
         inputAttributes: {
@@ -87,29 +104,50 @@ export default {
           autocorrect: 'off'
         },
         showCancelButton: true,
-        confirmButtonText: 'OK Delete it',
+        confirmButtonText: 'Sign In',
         cancelButtonText: 'Cancel',
         showCloseButton: true
       }).then((password) => {
         console.log('SWAL Result : ' + password)
         if (password === 'password') {
-          QuizService.deleteStatement(id)
-            .then(response => {
-              // JSON responses are automatically parsed.
-              this.message = response.data
-              console.log(this.message)
-              this.loadStatements()
-              // Vue.nextTick(() => this.$refs.vuetable.refresh())
-              this.$swal('Deleted', 'You successfully deleted this Statement ' + JSON.stringify(response.data, null, 5), 'success')
-            })
-            .catch(error => {
-              this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
-              this.errors.push(error)
-              console.log(error)
-            })
+          this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Remove']
+          this.loadStatements()
         } else {
+          this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree']
+          this.loadStatements()
           this.$swal('Wrong Password', 'Please Try Again', 'info')
         }
+      })
+    },
+    deleteStatement: function (id) {
+      this.$swal({
+        title: 'Delete? Are You Sure?',
+        /* input: 'password',
+        inputPlaceholder: 'Type password here',
+        inputAttributes: {
+          maxlength: 10,
+          autocapitalize: 'off',
+          autocorrect: 'off'
+        }, */
+        showCancelButton: true,
+        confirmButtonText: 'OK Delete it',
+        cancelButtonText: 'Cancel',
+        showCloseButton: true
+      }).then(() => {
+        QuizService.deleteStatement(id)
+          .then(response => {
+            // JSON responses are automatically parsed.
+            this.message = response.data
+            console.log(this.message)
+            this.loadStatements()
+            // Vue.nextTick(() => this.$refs.vuetable.refresh())
+            this.$swal('Deleted', 'You successfully deleted this Statement ' + JSON.stringify(response.data, null, 5), 'success')
+          })
+          .catch(error => {
+            this.$swal('ERROR', 'Something went wrong trying to Delete ' + error, 'error')
+            this.errors.push(error)
+            console.log(error)
+          })
       })
     }
 
@@ -151,6 +189,7 @@ export default {
     } */
   }
 }
+
 </script>
 
 <style scoped>
