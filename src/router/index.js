@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import Home from '@/components/Home'
 import TheQuiz from '@/components/TheQuiz'
 import AddStatement from '@/components/AddStatement'
-
+import Edit from '@/components/Edit'
 Vue.use(Router)
 
 export default new Router({
@@ -22,6 +22,12 @@ export default new Router({
       path: '/addStatement',
       name: 'AddStatement',
       component: AddStatement
+    },
+    {
+      path: '/edit',
+      name: 'Edit',
+      component: Edit,
+      props: true
     }
   ]
 })

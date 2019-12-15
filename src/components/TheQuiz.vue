@@ -9,6 +9,8 @@
         <a slot="Agree" slot-scope="props" class="fa fa-thumbs-up fa-2x" style="color:green"  @click="agree(props.row._id)"></a>
         <a slot="Disagree" slot-scope="props" class="fa fa-thumbs-down fa-2x" style="color:red" @click="disagree(props.row._id)"></a>
         <a slot="Remove" slot-scope="props" class="fa fa-trash-o fa-2x" @click="deleteStatement(props.row._id)"></a>
+        <a slot="Edit" slot-scope="props" class="fa fa-edit fa-2x" @click="editStatement(props.row._id)"></a>
+
       </v-client-table>
     </div>
   </div>
@@ -25,11 +27,11 @@ Vue.use(VueTables.ClientTable, {compileTemplates: true, filterByColumn: false, s
 // var passwordCorrect = false
 // var yes
 
-if (this.passwordCorrect === 'true') {
-  this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Remove']
+/* if (this.passwordCorrect === 'true') {
+  this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Edit', 'Remove']
 } else {
   this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree']
-}
+} */
 
 export default {
   name: 'Statements',
@@ -45,10 +47,12 @@ export default {
       // columns: yes,
       columns: ['statement', 'agree', 'disagree', 'Agree', 'Disagree'],
       options: {
+        // perPage: 2,
         headings: {
           statement: 'Statement',
           agree: 'Agreed',
           disagree: 'Disagreed',
+          edit: 'Edit',
           remove: 'Remove'
         }
       }
@@ -93,6 +97,10 @@ export default {
           console.log(error)
         })
     },
+    editStatement: function (id) {
+      this.$router.params = id
+      this.$router.push('edit')
+    },
     signInAsAdmin: function () {
       this.$swal({
         title: 'Enter Password',
@@ -110,7 +118,7 @@ export default {
       }).then((password) => {
         console.log('SWAL Result : ' + password)
         if (password === 'password') {
-          this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Remove']
+          this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree', 'Edit', 'Remove']
           this.loadStatements()
         } else {
           this.columns = ['statement', 'agree', 'disagree', 'Agree', 'Disagree']

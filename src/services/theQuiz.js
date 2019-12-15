@@ -16,5 +16,14 @@ export default {
   },
   deleteStatement (id) {
     return Api().delete(`/statements/${id}`)
+  },
+  fetchStatement (id) {
+    return Api().get(`/statements/${id}`)
+  },
+  putStatement (id, statement) {
+    console.log('REQUESTING ' + statement._id + ' ' +
+      JSON.stringify(statement, null, 5))
+    return Api().put(`/statements/${id}`, statement,
+      { headers: {'Content-type': 'application/json'} })
   }
 }

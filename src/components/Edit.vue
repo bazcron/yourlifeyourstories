@@ -5,25 +5,27 @@
       <div class="row justify-content-center">
         <div class="col-md-6">
 
-          <form @submit.prevent="submit">
+          <form>
             <div class="form-group" :class="{ 'form-group--error': $v.statement.$error }">
               <label class="form__label">Add a Statement to the Survey</label>
-              <input class="form__input" v-model.trim="$v.statement.$model"/>
+              <input class="form__input" type="text" v-model.trim="statement"/>
             </div>
             <p>Do you Agree or Disagree with your Statement, put a number in the box below.</p>
-              <div class="form-group" :class="{ 'form-group--error': $v.agree.$error }">
+            <div class="form-group" :class="{ 'form-group--error': $v.agree.$error }">
               <label class="form-control-label" name="agree">agree (Enter a number)</label>
-              <input class="form__input" type="number" v-model.trim="agree"/>
+              <input class="form__input" type="number" v-model.trim="agrees"/>
             </div>
             <div class="error" v-if="!$v.agree.minValue">agree value must be zero or more</div>
             <div class="form-group" :class="{ 'form-group--error': $v.statement.$error }">
               <label class="form-control-label" name="disagree">disagree (Enter a number)</label>
-              <input class="form__input" type="number" v-model.trim="disagree"/>
+              <input class="form__input" type="number" v-model.trim="disagrees"/>
             </div>
             <div class="error" v-if="!$v.disagree.minValue">disagree value must be zero or more</div>
             <div class="error" v-if="!$v.statement.required">Statement is Required</div>
             <div class="error" v-if="!$v.statement.minLength">Statement must have at least {{$v.statement.$params.minLength.min}} letters.</div>
-            <div><button class='btn-primary' type="submit">Save Statement</button></div>
+            <p>
+              <button v-on:click="updateStatement">Update State</button>
+            </p>
             <p class="typo__p" v-if="submitStatus === 'OK'">You have created a new Statement</p>
             <p class="typo__p" v-if="submitStatus === 'ERROR'">Please Fill in the Form Correctly.</p>
             <p class="typo__p" v-if="submitStatus === 'PENDING'">Saving Statement...</p>
@@ -37,8 +39,8 @@
 <script>
 import Vue from 'vue'
 import VueForm from 'vueform'
-import Vuelidate from 'vuelidate'
-import VueSweetalert from 'vue-sweetalert'
+// import Vuelidate from 'vuelidate'
+// import VueSweetalert from 'vue-sweetalert'
 import QuizService from '@/services/theQuiz'
 import { required, minLength, minValue } from 'vuelidate/lib/validators'
 
@@ -48,21 +50,16 @@ Vue.use(VueForm, {
     invalid: 'form-control-danger'
   }
 })
-
-Vue.use(Vuelidate)
-Vue.use(VueSweetalert)
-
 export default {
-  name: 'Donate',
   data () {
     return {
-      statementtitle: ' Statement ',
-      // message: '',
-      statement: '',
-      agree: 0,
-      disagree: 0,
-      newStatement: {},
-      submitStatus: null
+      statementtitle: 'Edit Statement',
+      statements: this.statement,
+      temp: {},
+      agrees: this.agree,
+      disagrees: this.disagree,
+      statement: this.statement,
+      submitStatus: ''
     }
   },
   validations: {
@@ -79,36 +76,30 @@ export default {
       minValue: minValue(0)
     }
   },
+  created () {
+    this.getStatement()
+  },
   methods: {
-    submit () {
-      console.log('submit!')
-      this.$v.$touch()
-      if (this.$v.$invalid) {
-        this.submitStatus = 'ERROR'
-      } else {
-        // do your submit logic here
-        this.submitStatus = 'PENDING'
-        setTimeout(() => {
-          this.submitStatus = 'OK'
-          let statement2 = {
-            statement: this.statement,
-            agree: this.agree,
-            disagree: this.disagree
-            // message: this.message
-          }
-          this.newStatement = statement2
-          console.log('Submitting in AddStatementForm : ' + JSON.stringify(this.newStatement, null, 5))
-          this.addStatement(this.newStatement)
-        }, 500)
-      }
-    },
-    addStatement: function (newStatement) {
-      console.log('addStatement!')
-      console.log('adding Statement : ' + newStatement)
-      QuizService.postStatement(newStatement)
+    getStatement: function () {
+      QuizService.fetchStatement(this.$router.params)
         .then(response => {
-          // JSON responses are automatically parsed.
+          this.temp = response.data
+          this.statement = this.temp[0].statement
+          this.agrees = this.temp[0].agree
+          this.disagrees = this.temp[0].disagree
+          // console.log('Getting Statement: ' + JSON.stringify(this.statement, null, 5))
+        })
+        .catch(error => {
+          this.errors.push(error)
+          console.log(error)
+        })
+    },
+    updateStatement: function (statements) {
+      console.log('Before PUT ' + JSON.stringify(statements, null, 5))
+      QuizService.putStatement(this.$router.params, statements)
+        .then(response => {
           console.log(response)
+          console.log('AFTER PUT ' + JSON.stringify(statements, null, 5))
         })
         .catch(error => {
           this.errors.push(error)
@@ -120,67 +111,14 @@ export default {
 </script>
 
 <style scoped>
+  #app1 {
+    width: 95%;
+    margin: 0 auto;
+  }
   .vue-title {
     margin-top: 30px;
     text-align: center;
     font-size: 45pt;
     margin-bottom: 10px;
-  }
-  #app1 {
-    width: 95%;
-    margin: 0 auto;
-  }
-  .required-field > label::after {
-    content: '*';
-    color: red;
-    margin-left: 0.25rem;
-  }
-  .donate-form .form-control-label.text-left{
-    text-align: left;
-  }
-
-  label {
-    display: inline-block;
-    width: 540px;
-    text-align: left;
-    font-size: large;
-  }
-  .typo__p {
-    width: 540px;
-    font-size: large;
-  }
-  .btn1 {
-    width: 300px;
-    font-size: x-large;
-  }
-  p {
-    margin-top: 20px;
-  }
-
-  input {
-    border: 1px solid silver;
-    border-radius: 4px;
-    background: white;
-    padding: 5px 10px;
-    width: 540px;
-  }
-
-  .dirty {
-    border-color: #5A5;
-    background: #EFE;
-  }
-
-  .dirty:focus {
-    outline-color: #8E8;
-  }
-
-  .error {
-    border-color: red;
-    background: #157ffb;
-    color: whitesmoke;
-  }
-
-  .error:focus {
-    outline-color: #ffa519;
   }
 </style>
