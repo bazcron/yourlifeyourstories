@@ -1,4 +1,4 @@
-# donationsvue-1.0
+# Your Life Your Stories
 
 > A Vue.js project
 

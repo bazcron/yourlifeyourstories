@@ -1,0 +1,27 @@
+Designed by: Barry Cronin
+Student Num: 20074828
+
+
+Your life Your Stories: web App
+
+A Web App that allows users to record directly from the website page and save to a mongodb.
+
+Allows users to record stories of their lives. Share theses with family and friends or to the general public.
+
+Functionality:
+
+Sign up to Record and Save video stories.
+Record directly from the web page.
+Allow video stories to be downloaded.
+Anyone can search for a story based on search criteria of LANGUAGE video is recorded in, COUNTRY story is based in, DECADE story is set in, and KEY WORDS that describe the story.
+users can like video stories.
+Video stories show information on video title, video description, number of views, number of likes.
+You can search for a specific video based on video id.
+
+There is a help screen containing help videos of how to use the site.
+
+links:
+
+github link: https://github.com/bazcron/yourlifeyourstories.git
+
+Youtube link: none currently

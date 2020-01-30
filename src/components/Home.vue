@@ -1,16 +1,27 @@
 <template>
   <div class="hero">
-    <h1 class="vue-title">Agree OR Disagree</h1>
+    <p><button id="btnStart">Join</button><button id="btnStop">Sign In</button></p>
+    <h1 class="vue-title">Your Life Your Stories</h1>
     <table align="center">
       <tr>
         <td bgcolor="#6495ed">
-          <p class="lead"><b><i>What sort of PERSON are you?</i></b>
-          <p>Do you find yourself Agreeing pretty much all the time, do you feel happier in a pack, is there safety in numbers</p>
-          <p>Or are you someone who has their own point of view, a Lone Wolf, not afraid to stand out from the crowd. </p>
-          <p><b>Well lets find out...</b></p>
-          <p>Answer the Survey... do you AGREE or DISAGREE with the statements, some fun, some serious, some controversial!!</p>
-          <p> But remember there's no Right OR Wrong answer... (Unless i tell you you're wrong) </p>
-          <p> Its entirely your opinion.. and everyone's opinion is right for them.</p>
+          <p class="lead"><b><i>Your Life Your Stories</i></b>
+          <p>A place for you to tell your Stories. </p>
+          <p>Stories that are important to you.</p>
+          <p><b></b></p>
+          <p>Are they Funny, or Serious... its up to you.</p>
+        </td>
+        <td bgcolor="#f5f5f5" width="50%" height="100%">
+          <div class="embed-responsive embed-responsive-16by9">
+            <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/vlDzYIIOYmM" allowfullscreen></iframe>
+          </div>
+        </td>
+        <td bgcolor="#6495ed">
+          <p class="lead"><b><i>Your Life Your Stories</i></b>
+          <p>A place for you to tell your Stories. </p>
+          <p>Stories that are important to you.</p>
+          <p><b></b></p>
+          <p>Are they Funny, or Serious... its up to you.</p>
         </td>
       </tr>
     </table>

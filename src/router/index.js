@@ -1,9 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import TheQuiz from '@/components/TheQuiz'
-import AddStatement from '@/components/AddStatement'
-import Edit from '@/components/Edit'
+import MembersPage from '@/components/MembersPage'
+import SearchStories from '@/components/SearchStories'
+import Help from '@/components/Help'
 Vue.use(Router)
 
 export default new Router({
@@ -14,20 +14,19 @@ export default new Router({
       component: Home
     },
     {
-      path: '/quiz',
-      name: 'TheQuiz',
-      component: TheQuiz
+      path: '/membersPage',
+      name: 'MembersPage',
+      component: MembersPage
     },
     {
-      path: '/addStatement',
-      name: 'AddStatement',
-      component: AddStatement
+      path: '/searchStories',
+      name: 'SearchStories',
+      component: SearchStories
     },
     {
-      path: '/edit',
-      name: 'Edit',
-      component: Edit,
-      props: true
+      path: '/help',
+      name: 'help',
+      component: Help
     }
   ]
 })
