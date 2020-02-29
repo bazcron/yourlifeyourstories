@@ -1,30 +1,64 @@
 <template>
   <div id="app1" class="hero">
     <h3 class="vue-title">Search Members Stories</h3>
+    <div >
+
+        <!-- language drop down list -->
+        <b-dropdown id="dropdown-1" text="Language" style="width:20%">
+          <b-dropdown-item>English</b-dropdown-item>
+          <b-dropdown-item>French</b-dropdown-item>
+          <b-dropdown-item>German</b-dropdown-item>
+        </b-dropdown>
+
+      <!-- Country drop down list -->
+        <b-dropdown id="dropdown-2" text="Country" style="width:20%">
+          <b-dropdown-item>Ireland</b-dropdown-item>
+          <b-dropdown-item>England</b-dropdown-item>
+          <b-dropdown-item>France</b-dropdown-item>
+        </b-dropdown>
+
+      <!-- Decade drop down list -->
+        <b-dropdown id="dropdown-3" text="Decade" style="width:20%">
+          <b-dropdown-item>1920s</b-dropdown-item>
+          <b-dropdown-item>1930s</b-dropdown-item>
+          <b-dropdown-item>1940s</b-dropdown-item>
+          <b-dropdown-item>1950s</b-dropdown-item>
+          <b-dropdown-item>1960s</b-dropdown-item>
+          <b-dropdown-item>1970s</b-dropdown-item>
+          <b-dropdown-item>1980s</b-dropdown-item>
+          <b-dropdown-item>1990s</b-dropdown-item>
+          <b-dropdown-item>2000s</b-dropdown-item>
+          <b-dropdown-item>2010s</b-dropdown-item>
+          <b-dropdown-item>2020s</b-dropdown-item>
+        </b-dropdown>
+      <b-button id="keyWordButton" style="width:20%" type="button">Search By Key Word
+      </b-button>
+      <div style="width:90%">
+        <b-form-textarea
+          id="keyWordInput"
+          placeholder="Enter word to search by"
+          rows="3"
+          max-rows="6"
+        ></b-form-textarea>
+      </div>
+      </div>
+    <div>
+    </div> <!-- ..............................................
     <div id="searchOptions">
-      <table>
-        <thead>
-        </thead>
-        <tbody>
-        <tr >
-          <td >
-            <!-- language drop down list -->
+      <div>
+
             <b-dropdown id="dropdown-1" text="Language" class="m-md-2">
-              <b-dropdown-item>First Action</b-dropdown-item>
-              <b-dropdown-item>Second Action</b-dropdown-item>
-              <b-dropdown-item>Third Action</b-dropdown-item>
+              <b-dropdown-item>English</b-dropdown-item>
+              <b-dropdown-item>French</b-dropdown-item>
+              <b-dropdown-item>German</b-dropdown-item>
             </b-dropdown>
-          </td>
-          <td >
-            <!-- Country drop down list -->
+
             <b-dropdown id="dropdown-2" text="Country" class="m-md-2">
-              <b-dropdown-item>First Action</b-dropdown-item>
-              <b-dropdown-item>Second Action</b-dropdown-item>
-              <b-dropdown-item>Third Action</b-dropdown-item>
+              <b-dropdown-item>Ireland</b-dropdown-item>
+              <b-dropdown-item>England</b-dropdown-item>
+              <b-dropdown-item>France</b-dropdown-item>
             </b-dropdown>
-          </td>
-          <td >
-            <!-- Decade drop down list -->
+
             <b-dropdown id="dropdown-3" text="Decade" class="m-md-2">
               <b-dropdown-item>1920s</b-dropdown-item>
               <b-dropdown-item>1930s</b-dropdown-item>
@@ -38,28 +72,21 @@
               <b-dropdown-item>2010s</b-dropdown-item>
               <b-dropdown-item>2020s</b-dropdown-item>
             </b-dropdown>
-          </td>
-          <td >
+      </div>
+      <div>
             <label id="keyWordLabel">
               Search by Key words
             </label>
-          </td>
-        </tr>
-        <tr>
-          <td></td><td></td><td></td><td>
           <b-form-textarea
           id="keyWordInput"
-          v-model="text"
           placeholder="Enter something..."
           rows="3"
           max-rows="6"
-        ></b-form-textarea></td>
-        </tr>
-        </tbody>
-      </table>
-    </div>
+        ></b-form-textarea>
+      </div>
+    </div> -->
   </div>
-</template> -->
+</template>
 
 <script>
 
@@ -75,6 +102,10 @@
   #app1 {
     width: 95%;
     margin: 0;
+  }
+  #keyWordInput{
+    float:right;
+    width:20%;
   }
   .required-field > label::after {
     content: '*';

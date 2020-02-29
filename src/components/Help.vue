@@ -1,19 +1,42 @@
 <template>
   <div id="app1" class="hero">
-    <h3 class="vue-title">Video Help</h3>
-    <h1>How To...</h1>
+    <h1 class="vue-title" >Video Help</h1>
+    <h1 align="left">How To...</h1>
     <div width="90%" background-color="blue">
-      <iframe class="embed-responsive-item" width="30%" src="https://www.youtube.com/embed/vlDzYIIOYmM" allowfullscreen></iframe>
-      <iframe class="embed-responsive-item" width="30%" src="https://www.youtube.com/embed/vlDzYIIOYmM" allowfullscreen></iframe>
-      <iframe class="embed-responsive-item" width="30%" src="https://www.youtube.com/embed/vlDzYIIOYmM" allowfullscreen></iframe>
+      <div width="30%">
+        <video  background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/test.mp4" type="video/mp4" />
+        </video>
+        <video  background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/assets/test.webm" type="video/webm">
+          your browser isnt supporting this video format
+        </video>
+        <video  background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/assets/test.webm" type="video/webm">
+          your browser isnt supporting this video format
+        </video>
+      </div>
+
+      <div width="30%">
+        <video id="video4" background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/assets/test.webm" type="video/webm">
+          your browser isnt supporting this video format
+        </video>
+        <video  background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/assets/test.webm" type="video/webm">
+          your browser isnt supporting this video format
+        </video>
+        <video  background-color="blue" width="30%" height="20%" controls>
+          <source src="../../src/assets/test.webm" type="video/webm">
+          your browser isnt supporting this video format
+        </video>
+      </div>
     </div>
-    <div width="90%">
+    <!--<div width="90%">
       <p><b-button class="b-button" width="30%">Click to Play</b-button>
       <b-button class="b-button" width="30%">Click to Play</b-button>
         <b-button class="b-button" width="30%">Click to Play</b-button></p>
-      <p class="helpDescription" width="30%">How to Join<b-button class="b-button">Click to Play</b-button>
-      How to Join<b-button class="b-button">Click to Play</b-button></p>
-    </div>
+    </div>-->
   </div>
 </template> -->
 

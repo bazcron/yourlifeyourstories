@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import MembersPage from '@/components/MembersPage'
 import SearchStories from '@/components/SearchStories'
 import Help from '@/components/Help'
+
 Vue.use(Router)
 
 export default new Router({

@@ -1,16 +1,41 @@
 <template>
   <div id="app1" class="hero">
     <h3 class="vue-title">Members Page</h3>
-    <video id="vid1" controls style="width: 40%; height:50%"></video>
-    <video id="vid2" controls ></video>
+    <video id="vid1" controls style="width: 30%; height:50%"></video>
+    <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
     <p><button id="btnStart">Start Recording</button><button id="btnStop">Stop Recording</button></p>
 
   </div>
 </template>
 
 <script>
+import member from '@/services/members'
 export default {
-  name: 'MembersPage'
+  name: 'MembersPage',
+  data () {
+    return {
+      members: [],
+      errors: []
+    }
+  },
+  // gets members
+  created () {
+    this.loadMember()
+  },
+  methods: {
+    loadMember: function () {
+      member.fetchMembers()
+        .then(response => {
+          // JSON responses are automatically parsed.
+          this.members = response.data
+          console.log(this.members)
+        })
+        .catch(error => {
+          this.errors.push(error)
+          console.log(error)
+        })
+    }
+  }
 }
 
 let constraintObj = {
@@ -78,13 +103,17 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     })
     stop.addEventListener('click', (ev) => {
       mediaRecorder.stop()
+      let vid2 = document.getElementById('vid2')
+      let vid1 = document.getElementById('vid1')
+      vid2.style.display = 'inline'
+      vid1.style.display = 'none'
       console.log(mediaRecorder.state)
     })
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data)
     }
     mediaRecorder.onstop = (ev) => {
-      let blob = new Blob(chunks, { 'type': 'video/mp4;' })
+      let blob = new Blob(chunks, { 'type': 'video/webm;' })
       chunks = []
       let videoURL = window.URL.createObjectURL(blob)
       vidSave.src = videoURL
