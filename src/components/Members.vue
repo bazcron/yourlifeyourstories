@@ -1,23 +1,32 @@
 <template>
   <div id="app1" class="hero">
-    <h2 class="vue-title">Members Page</h2>
-    <div id="tab buttons" width="100%">  //div for buttons
-      <button id="btnDivProfile">Members Profile </button>
-      <button id="btnDivRecord">Record Story</button>
-      <button id="btnDivWatch">Your Stories</button>
+    <h3 class="vue-title">Members Page</h3>
+    <!--div for buttons-->
+    <div id="tabButtons" width="100%">
+      <button id="btnDivProfile" v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Members Profile </button>
+      <button id="btnDivRecord" v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story</button>
+      <button id="btnDivWatch" v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories</button>
     </div>
-//.......................................end of div for buttons
-    <div id="div profile" width="100%"></div>  //put profile here
-//.......................................end of profile
-    <div id="tab record" width="100%">  //start of record
-    <video id="vid1" controls style="width: 30%; height:50%"></video>
+    <!--.......................................end of div for buttons-->
+    <!--put profile here-->
+    <div id="divProfile" width="100%" v-if="!ProfileIsHidden">
+      <h2>Your Profile</h2>
+    </div>
+    <!--.......................................end of profile-->
+    <!--start of record-->
+    <div id="divRecord" width="100%" v-if="!RecordIsHidden">
+      <h2>Record Your Story</h2>
+      <video id="vid1" controls style="width: 30%; height:50%"></video>
     <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
     <p><button id="btnStart">Start Recording</button><button id="btnStop">Stop Recording</button></p>
     <p><button id="btnSave" style="display:none">Save Recording</button><button id="btnCancel"  style="display:none">Cancel Recording</button></p>
     </div>
-//.......................................end of record
-    <div id="tab watch" width="100%"></div>  //put watch stories here
-//.......................................end of watch stories
+    <!--.......................................end of record-->
+    <!--put watch stories here-->
+    <div id="divWatch" width="100%" v-if="!WatchIsHidden">
+      <h2>Your Stories</h2>
+    </div>
+    <!--.......................................end of watch stories-->
     </div>
 </template>
 
@@ -31,7 +40,10 @@ export default {
   data () {
     return {
       members: [],
-      errors: []
+      errors: [],
+      ProfileIsHidden: true,
+      RecordIsHidden: false,
+      WatchIsHidden: true
     }
   },
   // gets members
@@ -116,6 +128,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     let cancelVideo = document.getElementById('btnCancel')
     let mediaRecorder = new MediaRecorder(mediaStreamObj)
     let chunks = []
+
     // let blob = new Blob()
 
     start.addEventListener('click', (ev) => {
@@ -168,7 +181,6 @@ navigator.mediaDevices.getUserMedia(constraintObj)
   .catch(function (err) {
     console.log(err.name, err.message)
   })
-
 function saveToDB () {
   console.log('inside save to DB')
   // let console = require('console')
@@ -198,18 +210,26 @@ function saveToDB () {
     })
   })
 }
-
-/*********************************
- getUserMedia returns a Promise
- resolve - returns a MediaStream Object
- reject returns one of the following errors
- AbortError - generic unknown cause
- NotAllowedError (SecurityError) - user rejected permissions
- NotFoundError - missing media track
- NotReadableError - user permissions given but hardware/OS error
- OverconstrainedError - constraint video settings preventing
- TypeError - audio: false, video: false
- *********************************/
+/* .................... Set up Div Buttons to hide and show divs
+<Script>
+      let btnYourProfile = document.getElementById("btnDivProfile")
+      let btnRecordStory = document.getElementById('btnDivRecord')
+      let btnYourStories = document.getElementById('btnDivWatch')
+      if (btnYourProfile !== undefined) {
+         btnYourProfile.addEventListener('click', (ev) => {
+        console.log('inside profile btn click')
+         divProfile.style.display = 'block'
+        divRecord.style.display = 'none'
+        divWatch.style.display = 'none'
+ })
+}
+let divProfile = document.getElementById('divProfile')
+let divRecord = document.getElementById('divRecord')
+let divWatch = document.getElementById('divWatch')
+btnRecordStory.addEventListener('click', (ev) => {
+})
+btnYourStories.addEventListener('click', (ev) => {
+}) */
 </script>
 
 <style scoped>
