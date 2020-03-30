@@ -1,24 +1,32 @@
 <template>
   <div id="app1" class="hero">
     <h3 class="vue-title">Search Members Stories</h3>
-    <div >
-
+    <div style="margin-left: 10%">
+        <div style="width:20%; float:left; margin-right: 2px; margin-top:1px">
         <!-- language drop down list -->
-        <b-dropdown id="dropdown-1" text="Language" style="width:20%">
+        <b-dropdown id="dropdown-1" text="Language" style="width:100%; margin:1px">
           <b-dropdown-item>English</b-dropdown-item>
           <b-dropdown-item>French</b-dropdown-item>
           <b-dropdown-item>German</b-dropdown-item>
         </b-dropdown>
-
+          <label id="languagelabel" style="width:100%">
+            Language
+          </label>
+        </div>
+      <div style="width:20%; float:left; margin-right: 2px; margin-top:1px">
       <!-- Country drop down list -->
-        <b-dropdown id="dropdown-2" text="Country" style="width:20%">
+        <b-dropdown id="dropdown-2" text="Country" style="width:100%; margin:1px">
           <b-dropdown-item>Ireland</b-dropdown-item>
           <b-dropdown-item>England</b-dropdown-item>
           <b-dropdown-item>France</b-dropdown-item>
         </b-dropdown>
-
+        <label id="countrylabel" style="width:100%">
+          Country
+        </label>
+      </div>
+        <div style="width:20%; float:left; margin-right: 2px; margin-top:1px">
       <!-- Decade drop down list -->
-        <b-dropdown id="dropdown-3" text="Decade" style="width:20%">
+        <b-dropdown id="dropdown-3" text="Decade" style="width:100%; margin:1px">
           <b-dropdown-item>1920s</b-dropdown-item>
           <b-dropdown-item>1930s</b-dropdown-item>
           <b-dropdown-item>1940s</b-dropdown-item>
@@ -31,18 +39,22 @@
           <b-dropdown-item>2010s</b-dropdown-item>
           <b-dropdown-item>2020s</b-dropdown-item>
         </b-dropdown>
-      <b-button id="keyWordButton" style="width:20%" type="button">Search By Key Word
+          <label id="decadelabel" style="width:100%">
+            Decade
+          </label>
+        </div>
+          <div style="width:20%; float:left;margin-right: 2px; margin-top:1px">
+          <b-button id="keyWordButton" style="width:100%" type="button">Search By Key Word
       </b-button>
-      <div style="width:90%">
-        <b-form-textarea
-          id="keyWordInput"
-          placeholder="Enter word to search by"
-          rows="3"
-          max-rows="6"
-        ></b-form-textarea>
+            <b-form-textarea
+              id="keyWordInput"
+              style="width:100%; float:left; margin:1px"
+              placeholder="Enter word to search by"
+              rows="3"
+              max-rows="6"
+            ></b-form-textarea>
+          </div>
       </div>
-      </div>
-    <div>
     </div> <!-- ..............................................
     <div id="searchOptions">
       <div>
@@ -85,7 +97,6 @@
         ></b-form-textarea>
       </div>
     </div> -->
-  </div>
 </template>
 
 <script>
@@ -103,8 +114,7 @@
     width: 95%;
     margin: 0;
   }
-  #keyWordInput{
-    float:right;
+  #keyWordInput2{
     width:20%;
   }
   .required-field > label::after {
@@ -123,7 +133,8 @@
   }
   #keyWordInput{
     position: center;
-    background-color: red;
+    background-color: darkgrey;
+    color: white;
   }
   #keyWordLabel{
     position: center;

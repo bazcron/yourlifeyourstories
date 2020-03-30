@@ -10,5 +10,29 @@
   <body>
     <div id="app"></div>
     <!-- built files will be auto injected -->
+  <script>
+    function join () {
+      let txt=""
+      let person = prompt('Please Enter Your Name:', 'Enter Name Here')
+      let password = prompt('Enter Enter a Password:', 'Password')
+      if (person == null || person === '' || password == null || password == '') {
+        txt = 'Sorry Please Try Again.'
+      } else {
+        txt = 'Hello ' + person + ' Welcome. You have created an Account'
+      }
+      document.getElementById('popUp').innerHTML = txt
+    }
+    function signIn () {
+      let txt=""
+      let person = prompt('Please Enter Your Name:', 'Enter Name Here')
+      let password = prompt('Please Enter Your Password:', 'Password')
+      if (person == null || person === '' || password == null || password == '') {
+        txt = 'Sorry That Information is Incorrect.'
+      } else {
+        txt = 'Hello ' + person + ' You Have Successfully Signed In'
+      }
+      document.getElementById('popUp').innerHTML = txt
+    }
+  </script>
   </body>
 </html>

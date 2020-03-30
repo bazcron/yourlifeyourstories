@@ -5,7 +5,7 @@
       <b-collapse is-nav id="nav_collapse">
         <b-navbar-nav class="ml-auto">
           <b-nav-item to="/#"><i class="fa fa-home" style="padding: 5px"> Home</i></b-nav-item>
-          <b-nav-item to="/membersPage"><i class="fa fa-plus" style="padding: 5px"> Members Page</i></b-nav-item>
+          <b-nav-item to="/members"><i class="fa fa-plus" style="padding: 5px"> Members Page</i></b-nav-item>
         <b-nav-item to="/searchStories"><i class="fa fa-question" style="padding: 5px"> Search Stories</i></b-nav-item>
           <b-nav-item to="/help"><i class="fa fa-question" style="padding: 5px"> Help</i></b-nav-item>
           <b-nav-item><i class="fa fa-question" style="padding: 5px"> Enter Story ID<b-form-input></b-form-input></i></b-nav-item>
@@ -23,8 +23,8 @@
 export default {
   name: 'App'
 }
-</script>
 
+</script>
 <style>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;

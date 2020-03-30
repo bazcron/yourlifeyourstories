@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
-import MembersPage from '@/components/MembersPage'
+import Members from '@/components/Members'
 import SearchStories from '@/components/SearchStories'
 import Help from '@/components/Help'
 
@@ -15,9 +15,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/membersPage',
-      name: 'MembersPage',
-      component: MembersPage
+      path: '/members',
+      name: 'Members',
+      component: Members
     },
     {
       path: '/searchStories',

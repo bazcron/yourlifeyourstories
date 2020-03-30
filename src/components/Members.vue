@@ -1,17 +1,33 @@
 <template>
   <div id="app1" class="hero">
-    <h3 class="vue-title">Members Page</h3>
+    <h2 class="vue-title">Members Page</h2>
+    <div id="tab buttons" width="100%">  //div for buttons
+      <button id="btnDivProfile">Members Profile </button>
+      <button id="btnDivRecord">Record Story</button>
+      <button id="btnDivWatch">Your Stories</button>
+    </div>
+//.......................................end of div for buttons
+    <div id="div profile" width="100%"></div>  //put profile here
+//.......................................end of profile
+    <div id="tab record" width="100%">  //start of record
     <video id="vid1" controls style="width: 30%; height:50%"></video>
     <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
     <p><button id="btnStart">Start Recording</button><button id="btnStop">Stop Recording</button></p>
-
-  </div>
+    <p><button id="btnSave" style="display:none">Save Recording</button><button id="btnCancel"  style="display:none">Cancel Recording</button></p>
+    </div>
+//.......................................end of record
+    <div id="tab watch" width="100%"></div>  //put watch stories here
+//.......................................end of watch stories
+    </div>
 </template>
 
 <script>
-import member from '@/services/members'
+import members from '@/services/members'
+const mongoose = require('mongoose')
+let blob = new Blob()
+// import saveThisVideo from '@testvideo.webm'
 export default {
-  name: 'MembersPage',
+  name: 'Members',
   data () {
     return {
       members: [],
@@ -24,7 +40,7 @@ export default {
   },
   methods: {
     loadMember: function () {
-      member.fetchMembers()
+      members.fetchMembers()
         .then(response => {
           // JSON responses are automatically parsed.
           this.members = response.data
@@ -39,7 +55,7 @@ export default {
 }
 
 let constraintObj = {
-  audio: false,
+  audio: true,
   video: {
     facingMode: 'user',
     width: { min: 640, ideal: 1280, max: 1920 },
@@ -91,11 +107,16 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     }
 
     // add listeners for saving video/audio
+    let vid2 = document.getElementById('vid2')
+    let vid1 = document.getElementById('vid1')
     let start = document.getElementById('btnStart')
     let stop = document.getElementById('btnStop')
     let vidSave = document.getElementById('vid2')
+    let saveVidToDB = document.getElementById('btnSave')
+    let cancelVideo = document.getElementById('btnCancel')
     let mediaRecorder = new MediaRecorder(mediaStreamObj)
     let chunks = []
+    // let blob = new Blob()
 
     start.addEventListener('click', (ev) => {
       mediaRecorder.start()
@@ -103,8 +124,6 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     })
     stop.addEventListener('click', (ev) => {
       mediaRecorder.stop()
-      let vid2 = document.getElementById('vid2')
-      let vid1 = document.getElementById('vid1')
       vid2.style.display = 'inline'
       vid1.style.display = 'none'
       console.log(mediaRecorder.state)
@@ -113,15 +132,72 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       chunks.push(ev.data)
     }
     mediaRecorder.onstop = (ev) => {
-      let blob = new Blob(chunks, { 'type': 'video/webm;' })
+      blob = new Blob(chunks, { 'type': 'video/webm;' })
       chunks = []
       let videoURL = window.URL.createObjectURL(blob)
       vidSave.src = videoURL
+      // saveThisVideo = blob
+
+      saveVidToDB.style.display = 'inline'
+      cancelVideo.style.display = 'inline'
+      start.style.display = 'none'
+      stop.style.display = 'none'
     }
+    saveVidToDB.addEventListener('click', (ev) => {
+      start.style.display = 'inline'
+      stop.style.display = 'inline'
+      saveVidToDB.style.display = 'none'
+      cancelVideo.style.display = 'none'
+      vid2.style.display = 'none'
+      vid1.style.display = 'inline'
+      video.play()
+      console.log('save Video to db')
+      saveToDB()
+    })
+    cancelVideo.addEventListener('click', (ev) => {
+      start.style.display = 'inline'
+      stop.style.display = 'inline'
+      saveVidToDB.style.display = 'none'
+      cancelVideo.style.display = 'none'
+      vid2.style.display = 'none'
+      vid1.style.display = 'inline'
+      video.play()
+      console.log('cancel video')
+    })
   })
   .catch(function (err) {
     console.log(err.name, err.message)
   })
+
+function saveToDB () {
+  console.log('inside save to DB')
+  // let console = require('console')
+  mongoose.createConnection('mongodb+srv://barry:hobbit00@cluster0-58mmj.mongodb.net/YourLifeYourStories?retryWrites=true&w=majority')
+  console.log('just after connect')
+  let conn = mongoose.connection
+  // let path = require('path')
+  console.log('just before stream')
+  let Grid = require('gridfs-stream')
+  console.log('just before fs')
+  let thisVideo = require('fs')
+  Grid.mongo = mongoose.mongo
+  console.log('just before open')
+  conn.once('open', function () {
+    console.log('connection open')
+    let gfs = Grid(conn.db)
+
+    let writestream = gfs.createWriteStream({
+      filename: 'testvideo2.webm'
+    })
+
+    thisVideo.createReadStream(blob).pipe(writestream)
+    console.log('after blob')
+    writestream.on('close', function (file) {
+      console.log(file.filename + ' written to DB')
+      document.write('written to db')
+    })
+  })
+}
 
 /*********************************
  getUserMedia returns a Promise

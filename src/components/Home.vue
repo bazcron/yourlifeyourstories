@@ -1,6 +1,7 @@
 <template>
   <div class="hero">
-    <p><button id="btnStart">Join</button><button id="btnStop">Sign In</button></p>
+    <p><button id="btnJoin" onclick="join()">Join</button><button id="btnSignIn" onclick="signIn()">Sign In</button></p>
+    <p id="popUp"></p>
     <h1 class="vue-title">Your Life Your Stories</h1>
     <table align="center">
       <tr>
@@ -28,7 +29,6 @@
     <p></p>
   </div>
 </template>
-
 <style>
   .hero {
     height: 100vh;
