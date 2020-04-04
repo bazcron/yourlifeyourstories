@@ -2,7 +2,7 @@
   <div class="hero">
     <p><button id="btnJoin" onclick="join()">Join</button><button id="btnSignIn" onclick="signIn()">Sign In</button></p>
     <p id="popUp"></p>
-    <h1 class="vue-title">Your Life Your Stories</h1>
+    <h2 class="vue-title">Your Life Your Stories</h2>
     <table align="center">
       <tr>
         <td bgcolor="#6495ed">

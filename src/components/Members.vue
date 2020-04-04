@@ -1,20 +1,44 @@
 <template>
   <div id="app1" class="hero">
-    <h3 class="vue-title">Members Page</h3>
+    <div class="signInOrJoin"> <!--...........Sign In or Join........................-->
+      <h1 class="vue-title" style="margin-bottom: 10%">Sign In or Join</h1>
+      <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
+      <div style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right" > <!-- ......................Join Div  -->
+        <p>Member Name <input v-model="memberName" placeholder="Member Name"></p>
+        <p>Member Password <input v-model="password" placeholder="Password"></p>
+        <button id="signIn" v-on:click="signIn=true">Sign In </button>
+      </div > <!-- .....................End of Sign in Div -->
+        <div style="background-color: cadetblue; padding: 2%; display:flex; flex-direction:column;"> <!-- ......................Sign In Div  -->
+          <!--<span class="border border-primary" style="padding: 2%">  -->
+          <p>Name <input v-model="memberName" placeholder="Member Name"></p>
+          <p>Please Enter your Email <input v-model="email" placeholder="Email"></p>
+          <p>Please Enter a Password <input v-model="password" placeholder="Password"></p>
+          <button id="join" v-on:click="join=true">Join</button>
+        </div> <!-- .....................End of Sign in Div -->
+      </div> <!-- .....................End of container div -->
+      <div class="memberHasSignedIn" style="display: none">Member Page  <!-- ...................... -->
+    <h1 class="vue-title">Members Page</h1>
     <!--div for buttons-->
-    <div id="tabButtons" width="100%">
+    <div id="tabButtons" style="width:100%">
       <button id="btnDivProfile" v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Members Profile </button>
-      <button id="btnDivRecord" v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story</button>
+      <button id="btnDivRecord"   v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story</button>
       <button id="btnDivWatch" v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories</button>
     </div>
     <!--.......................................end of div for buttons-->
     <!--put profile here-->
-    <div id="divProfile" width="100%" v-if="!ProfileIsHidden">
-      <h2>Your Profile</h2>
+    <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
+      <h3>Your Profile</h3>
+      <p>Member Name {{memberName}}<input v-model="memberName" placeholder="Member Name"></p>
+      <p>Member Email {{message}}<input v-model="email" placeholder="Email"></p>
+      <p>Member Password <input v-model="password" placeholder="Password"></p>
+      <p>Member Date Of Birth <input v-model="dob" placeholder="Date Of Birth"></p>
+      <span>Your Bio
+      <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
+      <textarea v-model="message" placeholder="Enter a little bit about yourself " style="width: 50%; height: 10%"></textarea></p></span>
     </div>
     <!--.......................................end of profile-->
     <!--start of record-->
-    <div id="divRecord" width="100%" v-if="!RecordIsHidden">
+    <div id="divRecord" width="100%"  v-if="!RecordIsHidden">
       <h2>Record Your Story</h2>
       <video id="vid1" controls style="width: 30%; height:50%"></video>
     <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
@@ -28,6 +52,8 @@
     </div>
     <!--.......................................end of watch stories-->
     </div>
+    </div><!--............... end of member has signed in div-->
+  </div> <!--............... end of sign in or join div-->
 </template>
 
 <script>
@@ -128,10 +154,16 @@ navigator.mediaDevices.getUserMedia(constraintObj)
     let cancelVideo = document.getElementById('btnCancel')
     let mediaRecorder = new MediaRecorder(mediaStreamObj)
     let chunks = []
+    let recordBtnClicked = document.getElementById('btnDivRecord')
+    // let divRecord = document.getElementById('divRecord')
 
     // let blob = new Blob()
-
+    recordBtnClicked.addEventListener('click', (ev) => {
+    }) // ..........................................................................
     start.addEventListener('click', (ev) => {
+      vid2.style.display = 'none'
+      vid1.style.display = 'inline'
+      mediaRecorder.stop()
       mediaRecorder.start()
       console.log(mediaRecorder.state)
     })

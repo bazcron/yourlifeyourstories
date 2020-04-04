@@ -1,6 +1,6 @@
 <template>
   <div id="app1" class="hero">
-    <h3 class="vue-title">Search Members Stories</h3>
+    <h1 class="vue-title">Search Members Stories</h1>
     <div style="margin-left: 10%">
         <div style="width:20%; float:left; margin-right: 2px; margin-top:1px">
         <!-- language drop down list -->
@@ -114,10 +114,7 @@
     width: 95%;
     margin: 0;
   }
-  #keyWordInput2{
-    width:20%;
-  }
-  .required-field > label::after {
+   .required-field > label::after {
     content: '*';
     color: red;
     margin-left: 0.25rem;
@@ -136,23 +133,8 @@
     background-color: darkgrey;
     color: white;
   }
-  #keyWordLabel{
-    position: center;
-    width:80%;
-  }
-  #searchOptions{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: blue;
-    width: 100%;
-  }
-
-  p {
+   p {
     margin-top: 20px;
-  }
-  .m-md-2 {
-    width:10%;
   }
   input {
     border: 1px solid silver;
