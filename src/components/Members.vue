@@ -4,19 +4,21 @@
       <h1 class="vue-title" style="margin-bottom: 10%">Sign In or Join</h1>
       <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
       <div style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right" > <!-- ......................Join Div  -->
-        <p>Member Name <input v-model="memberName" placeholder="Member Name"></p>
-        <p>Member Password <input v-model="password" placeholder="Password"></p>
-        <button id="signIn" v-on:click="signIn=true">Sign In </button>
+        <p>Member Name <input v-model.trim="findMemberName" placeholder="Member Name"></p>
+        <p>Member Password <input type="password" v-model="findPassword" placeholder="Password"></p>
+        <button id="signIn" v-on:click="signIn">Sign In </button>
+        {{error}}   <!-- ......................displayed an error if incorrect Sign in details entered   -->
       </div > <!-- .....................End of Sign in Div -->
         <div style="background-color: cadetblue; padding: 2%; display:flex; flex-direction:column;"> <!-- ......................Sign In Div  -->
           <!--<span class="border border-primary" style="padding: 2%">  -->
           <p>Name <input v-model="memberName" placeholder="Member Name"></p>
           <p>Please Enter your Email <input v-model="email" placeholder="Email"></p>
-          <p>Please Enter a Password <input v-model="password" placeholder="Password"></p>
-          <button id="join" v-on:click="join=true">Join</button>
+          <p>Please Enter a Password <input type="password" v-model="password" placeholder="Password"></p>
+          <button id="join" v-on:click="join">Join</button>
+          {{ errorJoining}}   <!-- ......................displayad an error if unable to join   -->
         </div> <!-- .....................End of Sign in Div -->
       </div> <!-- .....................End of container div -->
-      <div class="memberHasSignedIn" style="display: none">Member Page  <!-- ...................... -->
+      <div class="memberHasSignedIn" style="display: none">Member Page  <!-- .....style="display: none"................. -->
     <h1 class="vue-title">Members Page</h1>
     <!--div for buttons-->
     <div id="tabButtons" style="width:100%">
@@ -28,26 +30,55 @@
     <!--put profile here-->
     <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
       <h3>Your Profile</h3>
-      <p>Member Name {{memberName}}<input v-model="memberName" placeholder="Member Name"></p>
-      <p>Member Email {{message}}<input v-model="email" placeholder="Email"></p>
-      <p>Member Password <input v-model="password" placeholder="Password"></p>
-      <p>Member Date Of Birth <input v-model="dob" placeholder="Date Of Birth"></p>
+      <p>Member Name {{memberName}}</p>
+      <p>Member Email {{email}}</p>
+      <p>Member Password </p>
+      <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
       <span>Your Bio
       <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <textarea v-model="message" placeholder="Enter a little bit about yourself " style="width: 50%; height: 10%"></textarea></p></span>
     </div>
     <!--.......................................end of profile-->
     <!--start of record-->
-    <div id="divRecord" width="100%"  v-if="!RecordIsHidden">
+    <div id="divRecord" style="width:100%"  v-if="!RecordIsHidden">   <!-- v-if="!RecordIsHidden"  change it back to this -->
       <h2>Record Your Story</h2>
       <video id="vid1" controls style="width: 30%; height:50%"></video>
     <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
-    <p><button id="btnStart">Start Recording</button><button id="btnStop">Stop Recording</button></p>
+    <p><button id="btnStart" v-on:click="start">Start Recording</button><button id="btnStop" v-on:click="stop">Stop Recording</button></p>
     <p><button id="btnSave" style="display:none">Save Recording</button><button id="btnCancel"  style="display:none">Cancel Recording</button></p>
-    </div>
+        <div id="clockdiv">
+          <div>
+            <h3>Time</h3>
+            <h3>Left</h3>
+          </div>
+          <div>
+            <div class="smalltext" id="minutes">{{minutes}}</div>
+            <div class="smalltext" >Minutes</div>
+          </div>
+          <div>
+            <div class="smalltext" id="seconds">{{seconds}}</div>
+            <div class="smalltext" >Seconds</div>
+          </div>
+        </div>
+        <!-- ............................................................ -->
+        <div id="clockdiv2">
+          <div>
+            <h3>Time</h3>
+            <h3>Used</h3>
+          </div>
+          <div>
+            <div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
+            <div class="smalltext" >Minutes</div>
+          </div>
+          <div>
+            <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
+            <div class="smalltext" >Seconds</div>
+          </div>y
+        </div>
+        </div>
     <!--.......................................end of record-->
     <!--put watch stories here-->
-    <div id="divWatch" width="100%" v-if="!WatchIsHidden">
+    <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
       <h2>Your Stories</h2>
     </div>
     <!--.......................................end of watch stories-->
@@ -60,6 +91,9 @@
 import members from '@/services/members'
 const mongoose = require('mongoose')
 let blob = new Blob()
+// ----------------- variables for the clock ...................
+let stopped = false
+let deadline = 1200000
 // import saveThisVideo from '@testvideo.webm'
 export default {
   name: 'Members',
@@ -67,27 +101,68 @@ export default {
     return {
       members: [],
       errors: [],
+      error: '',
+      errorJoining: '',
       ProfileIsHidden: true,
       RecordIsHidden: false,
-      WatchIsHidden: true
+      WatchIsHidden: true,
+      memberName: this.memberName,
+      email: this.email,
+      password: this.password,
+      findMemberName: this.findMemberName,
+      findPassword: this.findPassword,
+      clockdiv: this.clockdiv,
+      minutes: this.minutes,
+      seconds: this.seconds,
+      minutesUsed: this.minutesUsed,
+      secondsUsed: this.secondsUsed,
+      clockdiv2: this.clockdiv2
     }
   },
-  // gets members
-  created () {
-    this.loadMember()
-  },
   methods: {
-    loadMember: function () {
-      members.fetchMembers()
-        .then(response => {
-          // JSON responses are automatically parsed.
-          this.members = response.data
-          console.log(this.members)
-        })
-        .catch(error => {
-          this.errors.push(error)
-          console.log(error)
-        })
+    start () {
+      // let deadline = 1200000
+      // initializeClock('clockdiv', deadline)
+      stopped = false
+      initializeClock('clockdiv', deadline)
+    },
+    stop () {
+      console.log('stop')
+      stopped = true
+      // initializeClock('clockdiv', -99)
+    },
+    join: function (event) {
+      console.log('inside join')
+      let newMember = {
+        memberName: this.memberName,
+        email: this.email,
+        password: this.password
+      }
+      console.log(newMember)
+      members.addNewMember(newMember).then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err.response)
+        this.errorJoining = err.response.data.error
+      })
+    },
+    signIn: function (event) {
+      let memberLogin = {
+        memberName: this.findMemberName,
+        password: this.findPassword
+      }
+      console.log('inside SignIn' + memberLogin.memberName + memberLogin.password)
+
+      members.checkMember(this.findMemberName, memberLogin).then(res => {
+        console.log('inside members.getMember')
+        console.log(res)
+        this.error = 'Congratualtions You Have Signed In'
+        // this.RecordIsHidden = false
+      }, err => {
+        console.log('error in signIn ')
+        // console.log(err.response)
+        this.error = err.response.data.error
+      })
     }
   }
 }
@@ -166,12 +241,16 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       mediaRecorder.stop()
       mediaRecorder.start()
       console.log(mediaRecorder.state)
+      stopped = false
+      initializeClock('clockdiv', deadline)
     })
     stop.addEventListener('click', (ev) => {
       mediaRecorder.stop()
       vid2.style.display = 'inline'
       vid1.style.display = 'none'
       console.log(mediaRecorder.state)
+      console.log('stop')
+      stopped = true
     })
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data)
@@ -213,6 +292,56 @@ navigator.mediaDevices.getUserMedia(constraintObj)
   .catch(function (err) {
     console.log(err.name, err.message)
   })
+function getTimeRemaining (endtime) {
+  let t = endtime
+  let seconds = Math.floor((t / 1000) % 60)
+  let minutes = Math.floor((t / 1000 / 60) % 60)
+
+  // let minutesSpan2 = document.getElementById('minutesUsed')
+  let secondsUsedConnect = document.getElementById('secondsUsed')
+  let minutesUsedConnect = document.getElementById('minutesUsed')
+
+  let secondsUsed = ((deadline - endtime) / 1000 % 60)
+  let minutesUsed = ((Math.floor((deadline / 1000 / 60) % 60)) - (Math.floor((endtime / 1000 / 60) % 60))) - 1
+  if (minutesUsed === -1) {
+    minutesUsed = 0
+  }
+  if (secondsUsed === 60) {
+    secondsUsed = 0
+  }
+  secondsUsedConnect.innerHTML = ('0' + secondsUsed).slice(-2)
+  minutesUsedConnect.innerHTML = ('0' + minutesUsed).slice(-2)
+  return {
+    'total': t,
+    'minutes': minutes,
+    'seconds': seconds
+  }
+}
+
+function initializeClock (id, endtime) {
+  console.log('here')
+  // let clock = document.getElementById('clockdiv')
+  let minutesSpan = document.getElementById('minutes')
+  let secondsSpan = document.getElementById('seconds')
+
+  function updateClock () {
+    endtime = endtime - 1000
+    let t = getTimeRemaining(endtime)
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
+
+    if (stopped === true) {
+      clearInterval(timeinterval)
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
+    }
+    if (t.total <= 0) {
+      clearInterval(timeinterval)
+    }
+  }
+  updateClock()
+  let timeinterval = setInterval(updateClock, 1000)
+}
 function saveToDB () {
   console.log('inside save to DB')
   // let console = require('console')
@@ -242,28 +371,68 @@ function saveToDB () {
     })
   })
 }
-/* .................... Set up Div Buttons to hide and show divs
-<Script>
-      let btnYourProfile = document.getElementById("btnDivProfile")
-      let btnRecordStory = document.getElementById('btnDivRecord')
-      let btnYourStories = document.getElementById('btnDivWatch')
-      if (btnYourProfile !== undefined) {
-         btnYourProfile.addEventListener('click', (ev) => {
-        console.log('inside profile btn click')
-         divProfile.style.display = 'block'
-        divRecord.style.display = 'none'
-        divWatch.style.display = 'none'
- })
-}
-let divProfile = document.getElementById('divProfile')
-let divRecord = document.getElementById('divRecord')
-let divWatch = document.getElementById('divWatch')
-btnRecordStory.addEventListener('click', (ev) => {
-})
-btnYourStories.addEventListener('click', (ev) => {
-}) */
 </script>
 
 <style scoped>
+  body{
+    text-align: center;
+    background: #00ECB9;
+    font-family: sans-serif;
+    font-weight: 100;
+  }
 
+  h1{
+    color: #396;
+    font-weight: 100;
+    font-size: 40px;
+    margin: 40px 0px 20px;
+  }
+
+  #clockdiv{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+  }
+  #clockdiv2{
+    font-family: sans-serif;
+    color: #fff;
+    display: inline-block;
+    font-weight: 100;
+    text-align: center;
+    font-size: 30px;
+  }
+
+  #clockdiv > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: cadetblue;
+    display: inline-block;
+  }
+  #clockdiv2 > div{
+    padding: 10px;
+    border-radius: 3px;
+    background: skyblue;
+    display: inline-block;
+  }
+
+  #clockdiv div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: skyblue;
+    display: inline-block;
+  }
+  #clockdiv2 div > span{
+    padding: 15px;
+    border-radius: 3px;
+    background: cadetblue;
+    display: inline-block;
+  }
+
+  .smalltext{
+    padding-top: 5px;
+    font-size: 16px;
+  }
 </style>

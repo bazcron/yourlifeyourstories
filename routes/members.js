@@ -1,4 +1,4 @@
-let mongoose = require('mongoose')
+/* let mongoose = require('mongoose')
 var Members = require('../models/members')
 let express = require('express')
 let router = express.Router()
@@ -26,3 +26,5 @@ router.findAll = (req, res) => {
     res.send(JSON.stringify(members, null, 5))
   })
 }
+
+*/
