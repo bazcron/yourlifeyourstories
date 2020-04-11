@@ -1,6 +1,6 @@
 <template>
   <div id="app1" class="hero">
-    <div class="signInOrJoin"> <!--...........Sign In or Join........................-->
+    <div class="signInOrJoin" v-show="showDiv"> <!--...........Sign In or Join........................-->
       <h1 class="vue-title" style="margin-bottom: 10%">Sign In or Join</h1>
       <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
       <div style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right" > <!-- ......................Join Div  -->
@@ -17,9 +17,10 @@
           <button id="join" v-on:click="join">Join</button>
           {{ errorJoining}}   <!-- ......................displayad an error if unable to join   -->
         </div> <!-- .....................End of Sign in Div -->
-      </div> <!-- .....................End of container div -->
-      <div class="memberHasSignedIn" style="display: none">Member Page  <!-- .....style="display: none"................. -->
-    <h1 class="vue-title">Members Page</h1>
+      </div>
+    </div><!--............... end of sign in or join div-->
+      <div class="memberHasSignedIn" v-show="showMemberDiv">
+    <h1 class="vue-title" style="">Members Page</h1>
     <!--div for buttons-->
     <div id="tabButtons" style="width:100%">
       <button id="btnDivProfile" v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Members Profile </button>
@@ -82,9 +83,8 @@
       <h2>Your Stories</h2>
     </div>
     <!--.......................................end of watch stories-->
-    </div>
     </div><!--............... end of member has signed in div-->
-  </div> <!--............... end of sign in or join div-->
+  </div>
 </template>
 
 <script>
@@ -102,6 +102,8 @@ export default {
       members: [],
       errors: [],
       error: '',
+      showDiv: true,
+      showMemberDiv: false,
       errorJoining: '',
       ProfileIsHidden: true,
       RecordIsHidden: false,
@@ -147,6 +149,7 @@ export default {
       })
     },
     signIn: function (event) {
+      // let showDiv = this.showDiv
       let memberLogin = {
         memberName: this.findMemberName,
         password: this.findPassword
@@ -158,6 +161,10 @@ export default {
         console.log(res)
         this.error = 'Congratualtions You Have Signed In'
         // this.RecordIsHidden = false
+        // showMemberDiv =
+        this.showDiv = false
+        this.showMemberDiv = true
+        // this.showDiv = true
       }, err => {
         console.log('error in signIn ')
         // console.log(err.response)
@@ -385,7 +392,11 @@ function saveToDB () {
     color: #396;
     font-weight: 100;
     font-size: 40px;
-    margin: 40px 0px 20px;
+    margin: 10px 0px 20px;
+  }
+  .vue-title{
+    text-align: left;
+    color:dodgerblue;
   }
 
   #clockdiv{
