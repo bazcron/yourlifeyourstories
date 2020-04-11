@@ -104,11 +104,14 @@
 </script>
 
 <style scoped>
-  .vue-title {
-    margin-top: 30px;
-    text-align: center;
-    font-size: 45pt;
+  .vue-title{
+    margin-top: 10px;
+    text-align: left;
+    font-size: 20pt;
+    font-weight: 100;
     margin-bottom: 10px;
+    margin-left: 10px;
+    color: cornflowerblue;
   }
   #app1 {
     width: 95%;

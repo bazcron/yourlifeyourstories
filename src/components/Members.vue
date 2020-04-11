@@ -1,7 +1,8 @@
 <template>
   <div id="app1" class="hero">
-    <div class="signInOrJoin" v-show="showDiv"> <!--...........Sign In or Join........................-->
-      <h1 class="vue-title" style="margin-bottom: 10%">Sign In or Join</h1>
+    <!--...........hiding this div while working on member div     v-show="showDiv"........................-->
+    <div class="signInOrJoin" v-show=false>
+      <h1 class="vue-title" >Sign In or Join</h1>
       <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
       <div style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right" > <!-- ......................Join Div  -->
         <p>Member Name <input v-model.trim="findMemberName" placeholder="Member Name"></p>
@@ -19,13 +20,14 @@
         </div> <!-- .....................End of Sign in Div -->
       </div>
     </div><!--............... end of sign in or join div-->
-      <div class="memberHasSignedIn" v-show="showMemberDiv">
+    <!--...........SHOWING this div while working on member div     v-show="showMemberDiv"........................-->
+    <div class="memberHasSignedIn" >
     <h1 class="vue-title" style="">Members Page</h1>
     <!--div for buttons-->
-    <div id="tabButtons" style="width:100%">
-      <button id="btnDivProfile" v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Members Profile </button>
-      <button id="btnDivRecord"   v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story</button>
-      <button id="btnDivWatch" v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories</button>
+    <div id="tabButtons" style="width:100%; margin-bottom: 2%" >
+      <button id="btnDivProfile" style="width:30%" v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Your Profile </button>
+      <button id="btnDivRecord"   style="width:30%" v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story</button>
+      <button id="btnDivWatch" style="width:30%" v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories</button>
     </div>
     <!--.......................................end of div for buttons-->
     <!--put profile here-->
@@ -33,20 +35,17 @@
       <h3>Your Profile</h3>
       <p>Member Name {{memberName}}</p>
       <p>Member Email {{email}}</p>
-      <p>Member Password </p>
+      <p>Change Password </p>
       <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
       <span>Your Bio
       <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <textarea v-model="message" placeholder="Enter a little bit about yourself " style="width: 50%; height: 10%"></textarea></p></span>
+      <b-button>Update Profile</b-button>
     </div>
-    <!--.......................................end of profile-->
-    <!--start of record-->
-    <div id="divRecord" style="width:100%"  v-if="!RecordIsHidden">   <!-- v-if="!RecordIsHidden"  change it back to this -->
-      <h2>Record Your Story</h2>
-      <video id="vid1" controls style="width: 30%; height:50%"></video>
-    <video id="vid2" controls style="width: 30%; height:50%; display:none"></video>
-    <p><button id="btnStart" v-on:click="start">Start Recording</button><button id="btnStop" v-on:click="stop">Stop Recording</button></p>
-    <p><button id="btnSave" style="display:none">Save Recording</button><button id="btnCancel"  style="display:none">Cancel Recording</button></p>
+    <!--end of profile Div.........-->
+    <!--start of record Div.........................................................-->
+    <div class="divRecord" style="width:100%" v-if="!RecordIsHidden">   <!-- v-if="!RecordIsHidden"  change it back to this -->
+      <div id="clockTimerDiv " style="width:30%">
         <div id="clockdiv">
           <div>
             <h3>Time</h3>
@@ -61,6 +60,7 @@
             <div class="smalltext" >Seconds</div>
           </div>
         </div>
+        <br>
         <!-- ............................................................ -->
         <div id="clockdiv2">
           <div>
@@ -68,22 +68,59 @@
             <h3>Used</h3>
           </div>
           <div>
-            <div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
+            <div class="smalltext"  id="minutesUsed">{{minutesUsed}}</div>
             <div class="smalltext" >Minutes</div>
           </div>
           <div>
-            <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
+            <div class="smalltext"  id="secondsUsed">{{secondsUsed}}</div>
             <div class="smalltext" >Seconds</div>
           </div>y
         </div>
+      </div> <!-- end of Timer Div... -->
+      <div id="divRecordStory" style="width:30%">
+      <h2>Record Your Story</h2>
+      <video id="vid1" controls style="width: 100%; height:50%"></video>
+    <video id="vid2" controls style="width: 100%; height:50%; display:none"></video>
+    <p><button id="btnStart" v-on:click="start">Start Recording</button><button id="btnStop" v-on:click="stop">Stop Recording</button></p>
+    <p><button id="btnSave" style="display:none">Save Recording</button><button id="btnCancel"  style="display:none">Cancel Recording</button></p>
+    </div> <!-- End of DivRecordStory........ -->
+
+      <div id="saveStoryDiv" style="width:30%"> <!-- save story here ................................ -->
+        <p>Please Enter Information on your Video Story</p>
+        <p>Story Title <input  v-model="storyTitle" placeholder="Story Title"></p> <!--v-model="storyTitle" -->
+        <div style="margin-left: 10%">
+        <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+          <!-- language drop down list -->
+          <!-- Ref:https://stackoverflow.com/questions/46789710/how-to-get-selected-item-of-b-form-select-with-vue-js-v-onchange-does-nothing -->
+          <b-form-select  v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown" :options="options"></b-form-select>
+          <div class="mt-3" style="width:3%"><strong>{{ languageDropdown }}</strong></div>
         </div>
-    <!--.......................................end of record-->
-    <!--put watch stories here-->
+        <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+          <!-- Country drop down list -->
+          <b-form-select v-on:change="getSelectedCountry" variant="primary" v-model="countryDropdown" :options="options2"></b-form-select>
+          <div class="mt-3"><strong>{{ countryDropdown }}</strong></div>
+        </div>
+        <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+          <!-- Decade drop down list -->
+          <b-form-select v-on:change="getSelectedDecade" variant="primary" v-model="decadeDropdown" :options="options3"></b-form-select>
+          <div class="mt-3"><strong>{{ decadeDropdown }}</strong></div>
+        </div>
+        </div>
+        <span>Tell Us About this Story
+      <p style="white-space: pre-line;">
+      <textarea  v-model="storyDescription" placeholder="Tell Us About This Story" style="width: 100%; height: 20%"></textarea></p></span><!-- v-model="aboutStory"-->
+        <b-button id="saveStoryBtn" v-on:click="saveStoryBtn">SAVE This Story</b-button>
+        {{newVideoMessage}}
+      </div> <!-- End ofsave story here div-->
+        </div>
+    <!-- end of record Div...........-->
+    <!--watch stories Div.........................................-->
     <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
       <h2>Your Stories</h2>
     </div>
-    <!--.......................................end of watch stories-->
-    </div><!--............... end of member has signed in div-->
+    <!-- end of watch stories Div.....-->
+    </div>
+    <!-- end of member has signed in div... -->
   </div>
 </template>
 
@@ -91,6 +128,9 @@
 import members from '@/services/members'
 const mongoose = require('mongoose')
 let blob = new Blob()
+let finalSecondsUsed = 0
+let finalMinutesUsed = 0
+
 // ----------------- variables for the clock ...................
 let stopped = false
 let deadline = 1200000
@@ -99,9 +139,60 @@ export default {
   name: 'Members',
   data () {
     return {
+      languageDropdown: ' ',
+      options: [
+        { value: ' ', text: 'Language' },
+        { value: 'English', text: 'English' },
+        { value: 'Gaelic', text: 'Gaelic' },
+        { value: 'French', text: 'French' },
+        { value: 'German', text: 'German' },
+        { value: 'Italian', text: 'Italian' },
+        { value: 'Spanish', text: 'Spanish' },
+        { value: 'Portuguese', text: 'Portuguese' },
+        { value: 'Mandarin', text: 'Mandarin' }
+      ],
+      countryDropdown: null,
+      options2: [
+        { value: null, text: 'Country' },
+        { value: 'England', text: 'England' },
+        { value: 'Ireland', text: 'Ireland' },
+        { value: 'France', text: 'France' },
+        { value: 'Germany', text: 'Germany' },
+        { value: 'Italy', text: 'Italy' },
+        { value: 'Spain', text: 'Spain' },
+        { value: 'Portugal', text: 'Portugal' },
+        { value: 'China', text: 'China' }
+      ],
+      decadeDropdown: null,
+      options3: [
+        { value: null, text: 'Decade' },
+        { value: 'before', text: 'Before 1900' },
+        { value: '1900s', text: '1900s' },
+        { value: '1910s', text: '1910s' },
+        { value: '1920s', text: '1920s' },
+        { value: '1930s', text: '1930s' },
+        { value: '1940s', text: '1940s' },
+        { value: '1950s', text: '1950s' },
+        { value: '1960s', text: '1960s' },
+        { value: '1970s', text: '1970s' },
+        { value: '1980s', text: '1980s' },
+        { value: '1990s', text: '1990s' },
+        { value: '2000s', text: '2000s' },
+        { value: '2010s', text: '2010s' },
+        { value: '2020s', text: '2020s' }
+      ],
+      storyTitle: 'Add a Title',
+      decade: '1990s',
+      country: 'Ireland',
+      language: 'English',
+      storyDescription: 'Add a Description',
+      minutesUsed: 0,
+      secondsUsed: 0,
       members: [],
       errors: [],
       error: '',
+      newVideoMessage: '',
+      sportsData: ['english', 'Irish'],
       showDiv: true,
       showMemberDiv: false,
       errorJoining: '',
@@ -116,12 +207,22 @@ export default {
       clockdiv: this.clockdiv,
       minutes: this.minutes,
       seconds: this.seconds,
-      minutesUsed: this.minutesUsed,
-      secondsUsed: this.secondsUsed,
       clockdiv2: this.clockdiv2
     }
   },
   methods: {
+    getSelectedLanguage: function (language) { // gets a the language value from dropdown list
+      console.log(language)
+      this.language = language
+    },
+    getSelectedCountry: function (country) { // gets a the country value from dropdown list
+      console.log(country)
+      this.country = country
+    },
+    getSelectedDecade: function (decade) { // gets a the decade value from dropdown list
+      console.log(decade)
+      this.decade = decade
+    },
     start () {
       // let deadline = 1200000
       // initializeClock('clockdiv', deadline)
@@ -132,6 +233,28 @@ export default {
       console.log('stop')
       stopped = true
       // initializeClock('clockdiv', -99)
+    },
+    saveStoryBtn: function (event) { // do this next
+      let videoId = this.storyTitle
+      console.log(videoId)
+      videoId = videoId + Math.floor(Math.random() * 999999)
+      console.log(videoId)
+      let newVideo = {
+        storyTitle: this.storyTitle,
+        storyCountry: this.country,
+        storyLanguage: this.language,
+        storyDecade: this.decade,
+        storyDescription: this.storyDescription,
+        storyMinutesUsed: finalMinutesUsed,
+        storySecondsUsed: finalSecondsUsed
+      }
+      console.log(newVideo)
+      members.addNewVideoStory(newVideo).then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err.response)
+        this.newVideoMessage = err.response.data.error
+      })
     },
     join: function (event) {
       console.log('inside join')
@@ -318,6 +441,8 @@ function getTimeRemaining (endtime) {
   }
   secondsUsedConnect.innerHTML = ('0' + secondsUsed).slice(-2)
   minutesUsedConnect.innerHTML = ('0' + minutesUsed).slice(-2)
+  finalSecondsUsed = ('0' + secondsUsed).slice(-2)
+  finalMinutesUsed = ('0' + minutesUsed).slice(-2)
   return {
     'total': t,
     'minutes': minutes,
@@ -381,24 +506,49 @@ function saveToDB () {
 </script>
 
 <style scoped>
+
+  .divRecord{
+    display:flex;
+    flex-direction:row;
+    justify-content: space-around;
+  }
+  #clockTimerDiv {
+    display:flex;
+    flex-direction:column;
+  }
+  #divRecordStory {
+    display:flex;
+    flex-direction:column;
+  }
+   #saveStoryDiv {
+     display:flex;
+     flex-direction:column;
+   }
   body{
     text-align: center;
     background: #00ECB9;
     font-family: sans-serif;
     font-weight: 100;
   }
-
-  h1{
-    color: #396;
-    font-weight: 100;
-    font-size: 40px;
-    margin: 10px 0px 20px;
-  }
   .vue-title{
+    margin-top: 10px;
     text-align: left;
-    color:dodgerblue;
+    font-size: 20pt;
+    font-weight: 100;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    color: cornflowerblue;
   }
-
+  h3{
+    font-size: 15pt;
+    font-weight: 100;
+    margin-bottom: 5px;
+   text-align: center;
+    color: cornflowerblue;
+  }
+#tabButtons{
+  margin-bottom: 5px;
+}
   #clockdiv{
     font-family: sans-serif;
     color: #fff;

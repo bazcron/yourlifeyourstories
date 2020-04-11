@@ -42,7 +42,12 @@
     font-size: 2.5rem;
   }
   .vue-title {
-    font-size: 70pt;
+    margin-top: 10px;
+    text-align: center;
+    font-size: 30pt;
+    font-weight: 100;
     margin-bottom: 10px;
+    margin-left: 10px;
+    color: cornflowerblue;
   }
 </style>

@@ -35,4 +35,5 @@ export default {
   text-align: center;
   color: white;
 }
+
 </style>
