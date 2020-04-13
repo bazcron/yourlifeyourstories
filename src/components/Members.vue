@@ -149,7 +149,7 @@
 
 <script>
 import members from '@/services/members'
-
+import axios from 'axios'
 const mongoose = require('mongoose')
 let blob = new Blob()
 let finalSecondsUsed = 0
@@ -167,6 +167,17 @@ export default {
       this.showDiv = false
       this.showMemberDiv = true
     }
+    // ............ Returning data about the signed in member............................
+    // eslint-disable-next-line standard/object-curly-even-spacing
+    axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+      .then(res => {
+        console.log('in mounted' + res.data.members.MemberName)
+        console.log('in mounted' + res.data.members.MemberId)
+        console.log('in mounted' + res.data.members.storyId)
+        /* this.MemberName = res.data.members.memberName
+        this._id = res.data.members.MemberId
+        this.storyId = res.data.members.storyId */
+      })
   },
   data () {
     return {
@@ -271,6 +282,7 @@ export default {
       videoId = videoId + Math.floor(Math.random() * 999999)
       console.log(videoId)
       let newVideo = {
+        storyId: videoId,
         storyTitle: this.storyTitle,
         storyCountry: this.country,
         storyLanguage: this.language,
@@ -279,12 +291,23 @@ export default {
         storyMinutesUsed: finalMinutesUsed,
         storySecondsUsed: finalSecondsUsed
       }
+      let updateMemberWithVideoId = {
+        storyId: videoId,
+        memberName: this.memberName
+      }
       console.log(newVideo)
+      // Save Video Story to database....................................
+      //
       members.addNewVideoStory(newVideo).then(res => {
         console.log(res)
       }, err => {
         console.log(err.response)
         this.newVideoMessage = err.response.data.error
+      })
+      members.updateMemberWithStoryId(updateMemberWithVideoId).then(res => {
+        console.log(res)
+      }, err => {
+        console.log(err.response)
       })
     },
     // Create an Account...............................................................................................
@@ -349,10 +372,9 @@ let constraintObj = {
     height: {min: 480, ideal: 720, max: 1080}
   }
 }
-// width: 1280, height: 720  -- preference only
-// facingMode: {exact: "user"}
-// facingMode: "environment"
 
+// Video Capture from devices camera..................................................................................
+//
 // handle older browsers that might implement getUserMedia in some way
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {}
@@ -414,7 +436,7 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       vid1.style.display = 'inline'
       mediaRecorder.stop()
       mediaRecorder.start()
-      console.log(mediaRecorder.state)
+      console.log('started: ' + mediaRecorder.state)
       stopped = false
       initializeClock('clockdiv', deadline)
     })
@@ -423,13 +445,14 @@ navigator.mediaDevices.getUserMedia(constraintObj)
       vid2.style.display = 'inline'
       vid1.style.display = 'none'
       console.log(mediaRecorder.state)
-      console.log('stop')
+      console.log('stopped inside stop.addEventListener')
       stopped = true
     })
     mediaRecorder.ondataavailable = function (ev) {
       chunks.push(ev.data)
     }
     mediaRecorder.onstop = (ev) => {
+      console.log('inside media.stop')
       blob = new Blob(chunks, {'type': 'video/webm;'})
       chunks = []
       let videoURL = window.URL.createObjectURL(blob)

@@ -11,8 +11,9 @@
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
         <b-nav-form>
-          <i style="width: 40%; font-size: large"> Enter Story ID</i>
-          <b-form-input style="width: 60%" placeholder="Enter Story ID"></b-form-input>
+          <!-- <i style="width: 40%; font-size: large"> Enter Story ID</i>  -->
+          <b-form-input style="width: 40%; margin-right: 5px;" placeholder="Enter Story ID"></b-form-input>
+          <b-button>Search for Story</b-button>
           </b-nav-form>
         </b-navbar-nav>
       </b-collapse>

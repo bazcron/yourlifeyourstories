@@ -14,5 +14,9 @@ export default {
   addNewVideoStory (videoStory) {
     return Api().post('/addNewVideoStory', videoStory,
       { headers: {'Content-type': 'application/json'} })
+  },
+  updateMemberWithStoryId (videoId) {
+    return Api().put('/updateMemberWithStoryId', videoId,
+      { headers: {'Content-type': 'application/json'} })
   }
 }
