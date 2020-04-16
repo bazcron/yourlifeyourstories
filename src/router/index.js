@@ -4,6 +4,7 @@ import Home from '@/components/Home'
 import Members from '@/components/Members'
 import SearchStories from '@/components/SearchStories'
 import Help from '@/components/Help'
+import Test from '@/components/test'
 
 Vue.use(Router)
 
@@ -13,6 +14,11 @@ export default new Router({
       path: '/',
       name: 'Home',
       component: Home
+    },
+    {
+      path: '/Test',
+      name: 'Test',
+      component: Test
     },
     {
       path: '/members',
