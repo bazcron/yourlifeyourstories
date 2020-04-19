@@ -1,6 +1,5 @@
 <template>
   <div class="hero">
-    <p><button id="btnJoin" onclick="join()">Join</button><button id="btnSignIn" onclick="signIn()">Sign In</button></p>
     <p id="popUp"></p>
     <h2 class="vue-title">Your Life Your Stories</h2>
     <table align="center">

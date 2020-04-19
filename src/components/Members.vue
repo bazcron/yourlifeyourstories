@@ -25,19 +25,19 @@
     </div><!--............... end of sign in or join div-->
     <!--...........SHOWING this div while working on member div     v-show="showMemberDiv"........................-->
     <div class="memberHasSignedIn" v-show="showMemberDiv">
-      <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button style="width:32%; float:right; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
+      <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button style="width:20%; float:right; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
 
       <!--div for buttons-->
       <div id="tabButtons" style="width:100%; margin-bottom: 15px; margin-top: 10px">
-        <button id="btnDivProfile" style="width:30%"
+        <b-button id="btnDivProfile" style="width:30%" variant="primary"
                 v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Your Profile
-        </button>
-        <button id="btnDivRecord" style="width:30%"
+        </b-button>
+        <b-button id="btnDivRecord" style="width:30% ; margin:1%" variant="primary"
                 v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story
-        </button>
-        <button id="btnDivWatch" style="width:30%"
+        </b-button>
+        <b-button id="btnDivWatch" style="width:30%" variant="primary"
                 v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories
-        </button>
+        </b-button>
       </div>
       <!--.......................................end of div for buttons-->
       <!--put profile here-->
@@ -57,40 +57,47 @@
       <!--start of record Div.........................................................-->
       <div class="divRecord" style="width:100%" v-if="!RecordIsHidden">
         <!-- v-if="!RecordIsHidden"  change it back to this -->
-        <div id="clockTimerDiv " style="width:30%">
-          <div id="clockdiv">
+        <div id="clockTimerDiv " style="width:30%; margin-left: 4%">
+          <div id="clockdiv" style="background-color: skyblue; padding:5px; margin: 2px;">
             <div>
-              <h3>Time</h3>
-              <h3>Left</h3>
+              <p>Time</p>
+              <p>Left</p>
+              <!-- <div class="smalltext" >Left</div> -->
+              <!--<h3>Time</h3>
+              <h3>Left</h3>-->
             </div>
-            <div>
-              <div class="smalltext" id="minutes">{{minutes}}</div>
-              <div class="smalltext">Minutes</div>
+            <div style="padding-top: 15px">
+              <span class="minutes" id="minutes">{{minutes}}</span>
+              <div class="smalltext" >Minutes</div>
             </div>
-            <div>
-              <div class="smalltext" id="seconds">{{seconds}}</div>
-              <div class="smalltext">Seconds</div>
+            <div style="padding-top: 15px">
+              <span class="seconds" id="seconds">{{seconds}}</span>
+              <div class="smalltext" >Seconds</div>
+              <!--<div class="smalltext" id="seconds">{{seconds}}</div>
+              <div class="smalltext">Seconds</div>-->
             </div>
           </div>
-          <br>
           <!-- ............................................................ -->
-          <div id="clockdiv2">
+          <div id="clockdiv2" style="background-color: cornflowerblue; padding:5px; margin: 2px;">
             <div>
-              <h3>Time</h3>
-              <h3>Used</h3>
+              <p>Time</p>
+              <p>Used</p>
             </div>
-            <div>
-              <div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
-              <div class="smalltext">Minutes</div>
+            <div style="padding-top: 5px">
+              <span class="minutes" id="minutesUsed">{{minutesUsed}}</span>
+              <div class="smalltext" >Minutes</div>
+              <!--<div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
+              <div class="smalltext">Minutes</div>-->
             </div>
-            <div>
-              <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
-              <div class="smalltext">Seconds</div>
+            <div style="padding-top: 5px">
+              <span class="secondsUsed" id="secondsUsed">{{secondsUsed}}</span>
+              <div class="smalltext" >Seconds</div>
+             <!-- <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
+              <div class="smalltext">Seconds</div>-->
             </div>
-            y
           </div>
         </div> <!-- end of Timer Div... -->
-        <div id="divRecordStory" style="width:30%">
+        <div id="divRecordStory" style="width:30%; margin-left: 1%">
           <h2>Record Your Story</h2>
           <video id="vid1" controls style="width: 100%; height:50%"></video>
           <video id="vid2" controls style="width: 100%; height:50%; display:none"></video>
@@ -104,7 +111,7 @@
           </p>
         </div> <!-- End of DivRecordStory........ -->
 
-        <div id="saveStoryDiv" style="width:30%"> <!-- save story here ................................ -->
+        <div id="saveStoryDiv" style="width:30%; margin-left: 1%"> <!-- save story here ................................ -->
           <p>Please Enter Information on your Video Story</p>
           <p>Story Title <input v-model="storyTitle" placeholder="Story Title"></p> <!--v-model="storyTitle" -->
           <div style="margin-left: 10%">
@@ -131,8 +138,8 @@
           <span>Tell Us About this Story
       <p style="white-space: pre-line;">
       <textarea v-model="storyDescription" placeholder="Tell Us About This Story"
-                style="width: 100%; height: 20%"></textarea></p></span><!-- v-model="aboutStory"-->
-          <b-button id="saveStoryBtn" v-on:click="saveStoryBtn">SAVE This Story</b-button>
+                style="width: 100%; height: 20%; width:95%; margin-left: 0%"></textarea></p></span><!-- v-model="aboutStory"-->
+          <b-button id="btnSaveThisStory" variant="warning" style="color:white; width:96%; margin-left: 2%" v-on:click="btnSaveThisStory">SAVE This Story</b-button>
           {{newVideoMessage}}
         </div> <!-- End ofsave story here div-->
       </div>
@@ -140,6 +147,18 @@
       <!--watch stories Div.........................................-->
       <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
         <h2>Your Stories</h2>
+        <b-card v-on:click="showThisVideo" v-for="(n, index) in resultArray" :key = "index"
+                style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
+                class="mb-2"
+        >
+          {{ n.storyCountry }}
+          {{ n.storyDecade }}
+          {{ n.storyDescription }}
+          {{ n.storyTitle }}
+          {{ n.storyLanguage }}
+          {{ n.storyMinutesUsed }}
+          {{ n.storySecondsUsed }}
+        </b-card>
       </div>
       <!-- end of watch stories Div.....-->
     </div>
@@ -149,8 +168,11 @@
 
 <script>
 import members from '@/services/members'
+import videoStories from '@/services/videoStories'
 import axios from 'axios'
-const mongoose = require('mongoose')
+import {fb} from '../firebase'
+
+// const mongoose = require('mongoose')
 let blob = new Blob()
 let finalSecondsUsed = 0
 let finalMinutesUsed = 0
@@ -166,21 +188,30 @@ export default {
     if (localStorage.getItem('token') != null) {
       this.showDiv = false
       this.showMemberDiv = true
+      allowAccessToVideoCamera()
     }
+    this.findMemberName = ''
+    this.findPassword = ''
     // ............ Returning data about the signed in member............................
     // eslint-disable-next-line standard/object-curly-even-spacing
     axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
       .then(res => {
-        console.log('in mounted' + res.data.members.MemberName)
-        console.log('in mounted' + res.data.members.MemberId)
-        console.log('in mounted' + res.data.members.storyId)
+        console.log('in mounted member name' + res.data.members.MemberName)
+        console.log('in mounted member id' + res.data.members.MemberId)
+        console.log('in mounted story ids' + res.data.members.storyId)
         /* this.MemberName = res.data.members.memberName
         this._id = res.data.members.MemberId
         this.storyId = res.data.members.storyId */
+        let listOfStoryIds = res.data.members.storyId
+        console.log(listOfStoryIds)
+        this.getListOfStories(listOfStoryIds)
       })
   },
   data () {
     return {
+      // used to store all the members video details
+      resultArray: [],
+      //
       languageDropdown: ' ',
       options: [
         {value: ' ', text: 'Language'},
@@ -244,15 +275,64 @@ export default {
       memberName: this.memberName,
       email: this.email,
       password: this.password,
-      findMemberName: this.findMemberName,
-      findPassword: this.findPassword,
+      findMemberName: '',
+      findPassword: '',
       clockdiv: this.clockdiv,
-      minutes: this.minutes,
-      seconds: this.seconds,
+      minutes: 0,
+      seconds: 0,
       clockdiv2: this.clockdiv2
     }
   },
   methods: {
+    // Show video of member................................................
+    //
+    showThisVideo () {
+      console.log('show Video!!!!')
+    },
+    // Displays all the members videos details.................................................
+    //
+    getListOfStories (listOfStoryIds) {
+      // let listOfStoryIds = []
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      // axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+      /// /   .then(res => {
+      //    listOfStoryIds = res.data.members.storyId
+      // listOfStoryIds = res.data.members.storyId
+      console.log('listOfStoryIds before searching db' + listOfStoryIds)
+      console.log(listOfStoryIds)
+      videoStories.getListOfStoryIds(listOfStoryIds) // .then(response => response.json())
+        .then(response => {
+          console.log('response ==' + response.data.storyId)
+          console.log(' response data ' + response.data)
+          console.log(response)
+          this.resultArray.push(...response.data)
+          // const resultArray = []
+          /* let data = 'data'
+                for (data in response) {
+                  console.log('key ' + data)
+                  this.resultArray.push(response[data])
+                  console.log('resultArray ' + this.resultArray)
+                } */
+          // }
+          // let responsed = response.json()
+          //  return responsed
+          // return response.json()
+          // }
+          //  )
+          /* .then(data => {
+              const resultArray = []
+              for (let key in data.response) {
+                resultArray.push(data.response[key])
+                console.log('resultArray ' + resultArray)
+              }
+              console.log('list of video stories ' + res)
+            }, err => {
+              console.log('error' + err.response)
+            }) */
+          //  }, err => {
+          //    console.log(err.response)
+        })
+    },
     getSelectedLanguage: function (language) { // gets a the language value from dropdown list
       console.log(language)
       this.language = language
@@ -265,6 +345,9 @@ export default {
       console.log(decade)
       this.decade = decade
     },
+    //
+    // Video Recording Section ....................................................................................
+    //
     start () {
       // let deadline = 1200000
       // initializeClock('clockdiv', deadline)
@@ -276,41 +359,78 @@ export default {
       stopped = true
       // initializeClock('clockdiv', -99)
     },
-    saveStoryBtn: function (event) { // do this next
+    btnSaveThisStory: function (event) { // do this next
+      let downloadTheUrl = ''
+
+      let storyTitleText = this.storyTitle
+      let storyCountryText = this.country
+      let storyLanguageText = this.language
+      let storyDecadeText = this.decade
+      let storyDescriptionText = this.storyDescription
+      let memberNameText = this.memberName
+
+      // create a unique id for each video......................................
       let videoId = this.storyTitle
       console.log(videoId)
+      videoId = videoId.replace(/\s+/g, '') // remove all spaces so the server can handle it better
+      console.log(videoId + '...')
       videoId = videoId + Math.floor(Math.random() * 999999)
       console.log(videoId)
-      let newVideo = {
-        storyId: videoId,
-        storyTitle: this.storyTitle,
-        storyCountry: this.country,
-        storyLanguage: this.language,
-        storyDecade: this.decade,
-        storyDescription: this.storyDescription,
-        storyMinutesUsed: finalMinutesUsed,
-        storySecondsUsed: finalSecondsUsed
-      }
-      let updateMemberWithVideoId = {
-        storyId: videoId,
-        memberName: this.memberName
-      }
-      console.log(newVideo)
-      // Save Video Story to database....................................
       //
-      members.addNewVideoStory(newVideo).then(res => {
-        console.log(res)
-      }, err => {
-        console.log(err.response)
-        this.newVideoMessage = err.response.data.error
+      // saving blob to firebase using the unique video id as part of the file name of the video........................................................
+      console.log('Video ' + blob)
+      let videoStorageRef = fb.storage().ref('Videos/' + blob + videoId)
+      let uploadTask = videoStorageRef.put(blob)
+
+      uploadTask.on('state_changed', function (snapshot) {
+
+      }, (error) => {
+        console.log(error)
+      }, () => {
+        uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+          downloadTheUrl = downloadURL.valueOf()
+          console.log('File available at', downloadURL)
+          console.log('File available at this', downloadTheUrl)
+          saveNewVideo() // WAIT : call the rest of the save fuction once the video has been saved to firebase
+        })
       })
-      members.updateMemberWithStoryId(updateMemberWithVideoId).then(res => {
-        console.log(res)
-      }, err => {
-        console.log(err.response)
-      })
+      // ................................................................................
+      function saveNewVideo () {
+        console.log('downloadUrl' + downloadTheUrl)
+        let newVideo = {
+          storyId: videoId,
+          storyFirebaseRef: downloadTheUrl,
+          storyTitle: storyTitleText,
+          storyCountry: storyCountryText,
+          storyLanguage: storyLanguageText,
+          storyDecade: storyDecadeText,
+          storyDescription: storyDescriptionText,
+          storyMinutesUsed: finalMinutesUsed,
+          storySecondsUsed: finalSecondsUsed
+        }
+        let updateMemberWithVideoId = {
+          storyId: videoId,
+          memberName: memberNameText
+        }
+        console.log(newVideo)
+        // Save Video Story to database....................................
+        //
+        members.addNewVideoStory(newVideo).then(res => {
+          console.log(res)
+          // this.newVideoMessage = res.response.data.error
+        }, err => {
+          console.log(err.response)
+          this.newVideoMessage = err.response.data.error
+        })
+        members.updateMemberWithStoryId(updateMemberWithVideoId).then(res => {
+          console.log(res)
+        }, err => {
+          console.log(err.response)
+        })
+      }
     },
-    // Create an Account...............................................................................................
+    //
+    // Create an Account...........................................................................................
     //
     join: function (event) {
       console.log('inside join')
@@ -322,6 +442,7 @@ export default {
       console.log(newMember)
       members.addNewMember(newMember).then(res => {
         console.log(res)
+        this.errorJoining = res.response.data.error
       }, err => {
         console.log(err.response)
         this.errorJoining = err.response.data.error
@@ -364,6 +485,8 @@ export default {
   }
 }
 
+// Video Capture from devices camera..................................................................................
+//
 let constraintObj = {
   audio: true,
   video: {
@@ -373,8 +496,6 @@ let constraintObj = {
   }
 }
 
-// Video Capture from devices camera..................................................................................
-//
 // handle older browsers that might implement getUserMedia in some way
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {}
@@ -399,97 +520,175 @@ if (navigator.mediaDevices === undefined) {
       console.log(err.name, err.message)
     })
 }
-navigator.mediaDevices.getUserMedia(constraintObj)
-  .then(function (mediaStreamObj) {
-    // connect the media stream to the first video element
-    let video = document.querySelector('video')
-    if ('srcObject' in video) {
-      video.srcObject = mediaStreamObj
-    } else {
-      // old version
-      video.src = window.URL.createObjectURL(mediaStreamObj)
-    }
+function allowAccessToVideoCamera () {
+  console.log('inside allowAccessToVideoCamera')
+  navigator.mediaDevices.getUserMedia(constraintObj)
+    .then(function (mediaStreamObj) {
+      // connect the media stream to the first video element
+      let video = document.querySelector('video')
+      if ('srcObject' in video) {
+        video.srcObject = mediaStreamObj
+      } else {
+        // old version
+        video.src = window.URL.createObjectURL(mediaStreamObj)
+      }
 
-    video.onloadedmetadata = function (ev) {
-      // show in the video element what is being captured by the webcam
-      video.play()
-    }
+      video.onloadedmetadata = function (ev) {
+        // show in the video element what is being captured by the webcam
+        video.play()
+      }
 
-    // add listeners for saving video/audio
-    let vid2 = document.getElementById('vid2')
-    let vid1 = document.getElementById('vid1')
-    let start = document.getElementById('btnStart')
-    let stop = document.getElementById('btnStop')
-    let vidSave = document.getElementById('vid2')
-    let saveVidToDB = document.getElementById('btnSave')
-    let cancelVideo = document.getElementById('btnCancel')
-    let mediaRecorder = new MediaRecorder(mediaStreamObj)
-    let chunks = []
-    let recordBtnClicked = document.getElementById('btnDivRecord')
-    // let divRecord = document.getElementById('divRecord')
+      // add listeners for saving video/audio
+      let vid2 = document.getElementById('vid2')
+      let vid1 = document.getElementById('vid1')
+      let start = document.getElementById('btnStart')
+      let stop = document.getElementById('btnStop')
+      let vidSave = document.getElementById('vid2')
+      let saveVidToDB = document.getElementById('btnSave')
+      let cancelVideo = document.getElementById('btnCancel')
+      let mediaRecorder = new MediaRecorder(mediaStreamObj)
+      let chunks = []
+      let recordBtnClicked = document.getElementById('btnDivRecord')
+      // let divRecord = document.getElementById('divRecord')
 
-    // let blob = new Blob()
-    recordBtnClicked.addEventListener('click', (ev) => {
-    }) // ..........................................................................
-    start.addEventListener('click', (ev) => {
-      vid2.style.display = 'none'
-      vid1.style.display = 'inline'
-      mediaRecorder.stop()
-      mediaRecorder.start()
-      console.log('started: ' + mediaRecorder.state)
-      stopped = false
-      initializeClock('clockdiv', deadline)
+      // let blob = new Blob()
+      recordBtnClicked.addEventListener('click', (ev) => {
+      }) // ..........................................................................
+      start.addEventListener('click', (ev) => {
+        vid2.style.display = 'none'
+        vid1.style.display = 'inline'
+        mediaRecorder.stop()
+        mediaRecorder.start()
+        console.log('started: ' + mediaRecorder.state)
+        stopped = false
+        initializeClock('clockdiv', deadline)
+      })
+      stop.addEventListener('click', (ev) => {
+        mediaRecorder.stop()
+        vid2.style.display = 'inline'
+        vid1.style.display = 'none'
+        console.log(mediaRecorder.state)
+        console.log('stopped inside stop.addEventListener')
+        stopped = true
+      })
+      mediaRecorder.ondataavailable = function (ev) {
+        chunks.push(ev.data)
+      }
+      mediaRecorder.onstop = (ev) => {
+        console.log('inside media.stop')
+        blob = new Blob(chunks, {'type': 'video/webm;'})
+
+        /* // saving blob to firebase
+        console.log('Video ' + blob)
+        let videoStorageRef = fb.storage().ref('Videos/' + blob)
+        let uploadTask = videoStorageRef.put(blob)
+
+        uploadTask.on('state_changed', function (snapshot) {
+
+        }, (error) => {
+          console.log(error)
+        }, () => {
+          uploadTask.snapshot.ref.getDownloadURL().then(function (downloadURL) {
+            console.log('File available at', downloadURL)
+          })
+        }) */
+        // ..........................................................................................
+        chunks = []
+        let videoURL = window.URL.createObjectURL(blob)
+        vidSave.src = videoURL
+        // saveThisVideo = blob
+
+        // saveVidToDB.style.display = 'inline'
+        // cancelVideo.style.display = 'inline'
+        // start.style.display = 'none'
+        // stop.style.display = 'none'
+      }
+      /* saveVidToDB.addEventListener('click', (ev) => {
+        start.style.display = 'inline'
+        stop.style.display = 'inline'
+        saveVidToDB.style.display = 'none'
+        cancelVideo.style.display = 'none'
+        vid2.style.display = 'none'
+        vid1.style.display = 'inline'
+        video.play()
+        console.log('save Video to db')
+        saveToDB()
+      }) */
+      cancelVideo.addEventListener('click', (ev) => {
+        start.style.display = 'inline'
+        stop.style.display = 'inline'
+        saveVidToDB.style.display = 'none'
+        cancelVideo.style.display = 'none'
+        vid2.style.display = 'none'
+        vid1.style.display = 'inline'
+        video.play()
+        console.log('cancel video')
+      })
     })
-    stop.addEventListener('click', (ev) => {
-      mediaRecorder.stop()
-      vid2.style.display = 'inline'
-      vid1.style.display = 'none'
-      console.log(mediaRecorder.state)
-      console.log('stopped inside stop.addEventListener')
-      stopped = true
+    .catch(function (err) {
+      console.log(err.name, err.message)
     })
-    mediaRecorder.ondataavailable = function (ev) {
-      chunks.push(ev.data)
-    }
-    mediaRecorder.onstop = (ev) => {
-      console.log('inside media.stop')
-      blob = new Blob(chunks, {'type': 'video/webm;'})
-      chunks = []
-      let videoURL = window.URL.createObjectURL(blob)
-      vidSave.src = videoURL
-      // saveThisVideo = blob
+}
+//
+// Save Video to Database ...............................................................................
+//
+/* function saveToDB () {
+  console.log('inside save to DB')
+  // let console = require('console')
+  mongoose.createConnection('mongodb+srv://barry:hobbit00@cluster0-58mmj.mongodb.net/YourLifeYourStories?retryWrites=true&w=majority')
+  console.log('just after connect')
+  let conn = mongoose.connection
+  // let path = require('path')
+  console.log('just before stream')
+  let Grid = require('gridfs-stream')
+  console.log('just before fs')
+  let thisVideo = require('fs')
+  Grid.mongo = mongoose.mongo
+  console.log('just before open')
+  conn.once('open', function () {
+    console.log('connection open')
+    let gfs = Grid(conn.db)
 
-      saveVidToDB.style.display = 'inline'
-      cancelVideo.style.display = 'inline'
-      start.style.display = 'none'
-      stop.style.display = 'none'
-    }
-    saveVidToDB.addEventListener('click', (ev) => {
-      start.style.display = 'inline'
-      stop.style.display = 'inline'
-      saveVidToDB.style.display = 'none'
-      cancelVideo.style.display = 'none'
-      vid2.style.display = 'none'
-      vid1.style.display = 'inline'
-      video.play()
-      console.log('save Video to db')
-      saveToDB()
+    let writestream = gfs.createWriteStream({
+      filename: 'testvideo2.webm'
     })
-    cancelVideo.addEventListener('click', (ev) => {
-      start.style.display = 'inline'
-      stop.style.display = 'inline'
-      saveVidToDB.style.display = 'none'
-      cancelVideo.style.display = 'none'
-      vid2.style.display = 'none'
-      vid1.style.display = 'inline'
-      video.play()
-      console.log('cancel video')
+
+    thisVideo.createReadStream(blob).pipe(writestream)
+    console.log('after blob')
+    writestream.on('close', function (file) {
+      console.log(file.filename + ' written to DB')
+      document.write('written to db')
     })
   })
-  .catch(function (err) {
-    console.log(err.name, err.message)
-  })
+} */
+//
+// Create Countdown Timer and keep track of time used...............................................
+//
+function initializeClock (id, endtime) {
+  console.log('here')
+  // let clock = document.getElementById('clockdiv')
+  let minutesSpan = document.getElementById('minutes')
+  let secondsSpan = document.getElementById('seconds')
 
+  function updateClock () {
+    endtime = endtime - 1000
+    let t = getTimeRemaining(endtime)
+    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
+    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
+
+    if (stopped === true) {
+      clearInterval(timeinterval)
+      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
+      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
+    }
+    if (t.total <= 0) {
+      clearInterval(timeinterval)
+    }
+  }
+
+  updateClock()
+  let timeinterval = setInterval(updateClock, 1000)
+}
 function getTimeRemaining (endtime) {
   let t = endtime
   let seconds = Math.floor((t / 1000) % 60)
@@ -518,61 +717,6 @@ function getTimeRemaining (endtime) {
   }
 }
 
-function initializeClock (id, endtime) {
-  console.log('here')
-  // let clock = document.getElementById('clockdiv')
-  let minutesSpan = document.getElementById('minutes')
-  let secondsSpan = document.getElementById('seconds')
-
-  function updateClock () {
-    endtime = endtime - 1000
-    let t = getTimeRemaining(endtime)
-    minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
-    secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
-
-    if (stopped === true) {
-      clearInterval(timeinterval)
-      minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
-      secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
-    }
-    if (t.total <= 0) {
-      clearInterval(timeinterval)
-    }
-  }
-
-  updateClock()
-  let timeinterval = setInterval(updateClock, 1000)
-}
-
-function saveToDB () {
-  console.log('inside save to DB')
-  // let console = require('console')
-  mongoose.createConnection('mongodb+srv://barry:hobbit00@cluster0-58mmj.mongodb.net/YourLifeYourStories?retryWrites=true&w=majority')
-  console.log('just after connect')
-  let conn = mongoose.connection
-  // let path = require('path')
-  console.log('just before stream')
-  let Grid = require('gridfs-stream')
-  console.log('just before fs')
-  let thisVideo = require('fs')
-  Grid.mongo = mongoose.mongo
-  console.log('just before open')
-  conn.once('open', function () {
-    console.log('connection open')
-    let gfs = Grid(conn.db)
-
-    let writestream = gfs.createWriteStream({
-      filename: 'testvideo2.webm'
-    })
-
-    thisVideo.createReadStream(blob).pipe(writestream)
-    console.log('after blob')
-    writestream.on('close', function (file) {
-      console.log(file.filename + ' written to DB')
-      document.write('written to db')
-    })
-  })
-}
 </script>
 
 <style scoped>
@@ -580,7 +724,9 @@ function saveToDB () {
   .divRecord {
     display: flex;
     flex-direction: row;
+/*
     justify-content: space-around;
+*/
   }
 
   #clockTimerDiv {

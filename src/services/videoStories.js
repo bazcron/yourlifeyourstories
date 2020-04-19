@@ -9,6 +9,7 @@ export default {
       { headers: {'Content-type': 'application/json'} })
   },
   getListOfStoryIds (listOfStoryIds) {
-    return Api().get('/getVideoStories', listOfStoryIds)
+    console.log('inside get for listOfStoryIds ' + listOfStoryIds)
+    return Api().get(`/getVideoStories/${listOfStoryIds}`)
   }
 }
