@@ -11,5 +11,9 @@ export default {
   getListOfStoryIds (listOfStoryIds) {
     console.log('inside get for listOfStoryIds ' + listOfStoryIds)
     return Api().get(`/getVideoStories/${listOfStoryIds}`)
+  },
+  getVideosBasedOnSearch (searchOptions) {
+    console.log('inside get Videos based on search ' + searchOptions)
+    return Api().get(`/getVideosBasedOnSearch/${searchOptions}`)
   }
 }

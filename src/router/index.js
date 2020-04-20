@@ -4,7 +4,7 @@ import Home from '@/components/Home'
 import Members from '@/components/Members'
 import SearchStories from '@/components/SearchStories'
 import Help from '@/components/Help'
-import Test from '@/components/test'
+import videoPopUp from '@/components/videoPopUp'
 
 Vue.use(Router)
 
@@ -16,9 +16,9 @@ export default new Router({
       component: Home
     },
     {
-      path: '/Test',
-      name: 'Test',
-      component: Test
+      path: '/videoPopUp',
+      name: 'videoPopUp',
+      component: videoPopUp
     },
     {
       path: '/members',

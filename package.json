@@ -25,6 +25,7 @@
     "dotenv": "^8.2.0",
     "firebase": "^7.14.1",
     "gridfs-stream": "^1.1.1",
+    "jquery": "^3.5.0",
     "jsonwebtoken": "^8.5.1",
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.5",
@@ -35,7 +36,8 @@
     "vue-sweetalert2": "^2.1.5",
     "vue-tables-2": "^1.6.16",
     "vueform": "^2.0.0",
-    "vuelidate": "^0.7.4"
+    "vuelidate": "^0.7.4",
+    "vuetify": "^2.2.22"
   },
   "devDependencies": {
     "autoprefixer": "^7.1.2",
