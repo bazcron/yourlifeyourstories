@@ -24,8 +24,11 @@
 </template>
 
 <script>
+// eslint-disable-next-line no-unused-vars
+// let $ = require('jquery')
 export default {
   name: 'App'
+  // jquery: 'jquery'
 }
 
 </script>

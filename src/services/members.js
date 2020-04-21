@@ -4,6 +4,9 @@ export default {
   fetchMembers () {
     return Api().get('/members')
   },
+  deleteMember (memberId) {
+    return Api().delete(`/members/${memberId}`)
+  },
   addNewMember (member) {
     return Api().post('/members', member,
       { headers: {'Content-type': 'application/json'} })

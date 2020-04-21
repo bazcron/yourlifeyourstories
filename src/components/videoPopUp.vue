@@ -1,57 +1,53 @@
 <template>
-  <div id="app1" class="hero">
-<div class="bs-example">
-  <!-- Button HTML (to Trigger Modal) -->
-  <a href="#myModal" class="btn btn-lg btn-primary" data-toggle="modal">Launch Demo Modal</a>
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-  <!-- Modal HTML -->
-  <div id="myModal" class="modal fade">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title">Video Story</h4>
-        </div>
-        <div class="modal-body">
-          <iframe id="video" width="560" height="315" src="//www.youtube.com/embed/YE7VzlLtp-4" frameborder="0" allowfullscreen></iframe>
-        </div>
-      </div>
-    </div>
+  <div>
+  <div>
+    <b-card
+      title="Card Title"
+      img-src="https://picsum.photos/600/300/?image=25"
+      img-alt="Image"
+      img-top
+      tag="article"
+      style="max-width: 20rem;"
+      class="mb-2"
+    >
+      <b-card-text>
+        Some quick example text to build on the card title and make up the bulk of the card's content.
+      </b-card-text>
+
+      <b-button href="#" variant="primary">Go somewhere</b-button>
+    </b-card>
   </div>
-</div>
+  <mdb-card>
+    <mdb-view hover>
+      <a href="#!">
+        <mdb-card-image
+          src="https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20%282%29.jpg"
+          alt="Card image cap"/>
+        <mdb-mask flex-center waves overlay="white-slight"></mdb-mask>
+      </a>
+    </mdb-view>
+    <mdb-card-body>
+      <mdb-card-title>Card with waves effect</mdb-card-title>
+      <mdb-card-text>Some quick example text to build on the card title and make up the bulk of the card's content.</mdb-card-text>
+      <mdb-btn color="primary">Button</mdb-btn>
+    </mdb-card-body>
+  </mdb-card>
   </div>
 </template>
 
 <script>
-import $ from 'jquery'
-
+import { mdbCard, mdbCardImage, mdbCardBody, mdbCardTitle, mdbCardText, mdbBtn, mdbView, mdbMask } from 'mdbvue'
 export default {
-  name: 'videoPopUp'
+  name: 'CardPage',
+  components: {
+    mdbCard,
+    mdbCardImage,
+    mdbCardBody,
+    mdbCardTitle,
+    mdbCardText,
+    mdbBtn,
+    mdbView,
+    mdbMask
+  }
 }
-$(document).ready(function () {
-  /* Get iframe src attribute value i.e. YouTube video url
-    and store it in a variable */
-  var url = $('#video').attr('src')
-
-  /* Assign empty url value to the iframe src attribute when
-    modal hide, which stop the video playing */
-  $('#myModal').on('hide.bs.modal', function () {
-    $('#video').attr('src', '')
-  })
-
-  /* Assign the initially stored url back to the iframe src
-    attribute when modal is displayed again */
-  $('#myModal').on('show.bs.modal', function () {
-    $('#video').attr('src', url)
-  })
-})
 </script>
-<style>
-  .bs-example{
-    margin: 20px;
-  }
-  .modal-content iframe{
-    margin: 0 auto;
-    display: block;
-  }
-</style>

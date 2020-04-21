@@ -1,6 +1,7 @@
 <template>
-  <div id="app1" class="hero">
-    <!--...........hiding this div while working on member div     v-show="showDiv"........................-->
+<!--  <div id="app" style="color:black">-->
+  <div style="color: black">
+      <!--...........hiding this div while working on member div     v-show="showDiv"........................-->
     <div class="signInOrJoin" v-show="showDiv" >  <!--v-show=false -->
       <h1 class="vue-title">Sign In or Join</h1>
       <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
@@ -25,7 +26,7 @@
     </div><!--............... end of sign in or join div-->
     <!--...........SHOWING this div while working on member div     v-show="showMemberDiv"........................-->
     <div class="memberHasSignedIn" v-show="showMemberDiv">
-      <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button variant="danger" style="width:10%; float:right; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
+      <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button variant="danger" style="width:10%; float:left; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
 
       <!--div for buttons-->
       <div id="tabButtons" style="width:100%; margin-bottom: 15px; margin-top: 10px">
@@ -43,7 +44,7 @@
       <!--put profile here-->
       <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
         <h3>Your Profile</h3>
-        <p>Member Name {{memberName}}</p>
+        <p>Member Name {{this.memberName}}</p>
         <p>Member Email {{email}}</p>
         <p>Change Password </p>
         <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
@@ -51,7 +52,7 @@
       <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <textarea v-model="message" placeholder="Enter a little bit about yourself "
                 style="width: 50%; height: 10%"></textarea></p></span>
-        <b-button>Update Profile</b-button>
+        <b-button variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
       </div>
       <!--end of profile Div.........-->
       <!--start of record Div.........................................................-->
@@ -103,12 +104,12 @@
 
         <div id="saveStoryDiv" style="width:30%; margin-left: 1%"> <!-- save story here ................................ -->
           <p>Please Enter Information on your Video Story</p>
-          <p>Story Title <input v-model="storyTitle" placeholder="Story Title"></p> <!--v-model="storyTitle" -->
+          <p>Story Title <input v-model="storyTitle" placeholder="Enter Story Title"></p> <!--v-model="storyTitle" -->
           <div style="margin-left: 10%">
+            <!-- language drop down list -->
+            <!-- Ref:https://stackoverflow.com/questions/46789710/how-to-get-selected-item-of-b-form-select-with-vue-js-v-onchange-does-nothing -->
             <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
-              <!-- language drop down list -->
-              <!-- Ref:https://stackoverflow.com/questions/46789710/how-to-get-selected-item-of-b-form-select-with-vue-js-v-onchange-does-nothing -->
-              <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
+               <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
                              :options="options"></b-form-select>
               <div class="mt-3" style="width:3%"><strong>{{ languageDropdown }}</strong></div>
             </div>
@@ -139,7 +140,7 @@
       <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
         <h2>Your Stories</h2>
         <!-- creates a new card for each video brought back from the database -->
-        <b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+        <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
                 style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
                 class="mb-2">
           {{ n.storyCountry }}
@@ -149,6 +150,23 @@
           {{ n.storyLanguage }}
           {{ n.storyMinutesUsed }}
           {{ n.storySecondsUsed }}
+        </b-card>-->
+        <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+                style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
+                class="mb-2; overflow-hidden">
+          <b-row no-gutters>
+            <b-col md="5">
+              <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
+            </b-col>
+            <b-col md="7">
+              <b-card-title>{{ n.storyTitle }}</b-card-title>
+
+              <b-card-text>
+                {{ n.storyDescription }}
+              </b-card-text>
+
+            </b-col>
+          </b-row>
         </b-card>
       </div>
       <!-- end of watch stories Div.....-->
@@ -175,7 +193,6 @@
       </div>
     </div>
     <!-- End of Video PopUp display ...................................... -->
-
   </div>
 </template>
 
@@ -185,6 +202,19 @@ import videoStories from '@/services/videoStories'
 import axios from 'axios'
 import {fb} from '../firebase'
 import $ from 'jquery'
+import Vue from 'vue'
+import VueForm from 'vueform'
+import Vuelidate from 'vuelidate'
+import VueSweetalert from 'vue-sweetalert'
+Vue.use(VueForm, {
+  inputClasses: {
+    valid: 'form-control-success',
+    invalid: 'form-control-danger'
+  }
+})
+
+Vue.use(Vuelidate)
+Vue.use(VueSweetalert)
 // const mongoose = require('mongoose')
 // const mongoose = require('mongoose')
 let blob = new Blob()
@@ -213,6 +243,7 @@ export default {
         console.log('in mounted member name' + res.data.members.MemberName)
         console.log('in mounted member id' + res.data.members.MemberId)
         console.log('in mounted story ids' + res.data.members.storyId)
+        this.memberName = res.data.members.MemberName
         /* this.MemberName = res.data.members.memberName
         this._id = res.data.members.MemberId
         this.storyId = res.data.members.storyId */
@@ -278,6 +309,9 @@ export default {
         {value: '2010s', text: '2010s'},
         {value: '2020s', text: '2020s'}
       ],
+      message: '',
+      dob: '',
+      bio: '',
       storyTitle: 'Add a Title',
       decade: '1990s',
       country: 'Ireland',
@@ -316,15 +350,6 @@ export default {
     },
     btnDoNotSaveStory () {
       // show a warning message first....
-    /*  let vid2 = document.getElementById('vid2')
-      let vid1 = document.getElementById('vid1')
-      let start = document.getElementById('btnStart')
-      let stop = document.getElementById('btnStop')
-      // let cancelVideo = document.getElementById('btnCancel')
-      start.style.display = 'inline'
-      stop.style.display = 'inline'
-      vid2.style.display = 'none'
-      vid1.style.display = 'inline' */
       video.play()
       console.log('cancel video & cancel video save')
     },
@@ -390,6 +415,24 @@ export default {
     stop () {
       console.log('stop')
       stopped = true
+    },
+    btnDeleteAccount: function () {
+      // eslint-disable-next-line standard/object-curly-even-spacing
+      axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+        .then(res => {
+          console.log('in mounted member name ' + res.data.members.MemberId)
+          let memberId = res.data.members.MemberId
+          members.deleteMember(memberId)
+            .then(response => {
+              console.log('member deleted ' + this.message)
+              localStorage.clear()
+              this.showDiv = true
+              this.showMemberDiv = false
+            })
+            .catch(error => {
+              console.log(error)
+            })
+        })
     },
     btnSaveThisStory: function (event) { // do this next
       let downloadTheUrl = ''
@@ -682,7 +725,6 @@ function getTimeRemaining (endtime) {
 </script>
 
 <style scoped>
-
   .divRecord {
     display: flex;
     flex-direction: row;
@@ -703,12 +745,12 @@ function getTimeRemaining (endtime) {
     flex-direction: column;
   }
 
-  body {
+  /*body {
     text-align: center;
     background: #00ECB9;
     font-family: sans-serif;
     font-weight: 100;
-  }
+  }*/
 
   .vue-title {
     margin-top: 5px;
