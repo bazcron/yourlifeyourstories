@@ -1,211 +1,221 @@
 <template>
-<!--  <div id="app" style="color:black">-->
-  <div style="color: black">
+  <div id="app1" class="hero">
+    <div >
       <!--...........hiding this div while working on member div     v-show="showDiv"........................-->
-    <div class="signInOrJoin" v-show="showDiv" >  <!--v-show=false -->
-      <h1 class="vue-title">Sign In or Join</h1>
-      <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
-        <div
-          style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right">
-          <!-- ......................Join Div  -->
-          <p>Member Name <input v-model.trim="findMemberName" placeholder="Member Name"></p>
-          <p>Member Password <input type="password" v-model="findPassword" placeholder="Password"></p>
-          <button id="signIn" v-on:click="signIn">Sign In</button>
-          {{error}}   <!-- ......................displayed an error if incorrect Sign in details entered   -->
-        </div> <!-- .....................End of Sign in Div -->
-        <div style="background-color: cadetblue; padding: 2%; display:flex; flex-direction:column;">
-          <!-- ......................Sign In Div  -->
-          <!--<span class="border border-primary" style="padding: 2%">  -->
-          <p>Name <input v-model="memberName" placeholder="Member Name"></p>
-          <p>Please Enter your Email <input v-model="email" placeholder="Email"></p>
-          <p>Please Enter a Password <input type="password" v-model="password" placeholder="Password"></p>
-          <button id="join" v-on:click="join">Join</button>
-          {{ errorJoining}}   <!-- ......................displayad an error if unable to join   -->
-        </div> <!-- .....................End of Sign in Div -->
-      </div>
-    </div><!--............... end of sign in or join div-->
-    <!--...........SHOWING this div while working on member div     v-show="showMemberDiv"........................-->
-    <div class="memberHasSignedIn" v-show="showMemberDiv">
-      <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button variant="danger" style="width:10%; float:left; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
+      <div class="signInOrJoin" v-show="showDiv" >  <!--v-show=false -->
+        <h1 class="vue-title">Sign In or Join</h1>
+        <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
+          <div
+            style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right">
+            <!-- ......................Join Div  -->
+            <p>Member Name <input v-model.trim="findMemberName" placeholder="Member Name"></p>
+            <p>Member Password <input type="password" v-model="findPassword" placeholder="Password"></p>
+            <button id="signIn" v-on:click="signIn">Sign In</button>
+            {{error}}   <!-- ......................displayed an error if incorrect Sign in details entered   -->
+          </div> <!-- .....................End of Sign in Div -->
+          <div style="background-color: #4685ed; padding: 2%; display:flex; flex-direction:column; justify-content: right">
+            <!-- ......................Sign In Div  -->
+            <!--<span class="border border-primary" style="padding: 2%">  -->
+            <p>Name <input v-model="memberName" placeholder="Member Name"></p>
+            <p>Please Enter your Email <input v-model="email" placeholder="Email"></p>
+            <p>Please Enter a Password <input type="password" v-model="password" placeholder="Password"></p>
+            <button id="join" v-on:click="join">Join</button>
+            {{ errorJoining}}   <!-- ......................displayad an error if unable to join   -->
+          </div> <!-- .....................End of Sign in Div -->
+        </div>
+      </div><!--............... end of sign in or join div-->
+      <!--...........SHOWING this div while working on member div     v-show="showMemberDiv"........................-->
+      <div class="memberHasSignedIn" v-show="showMemberDiv">
+        <h1 class="vue-title" style="margin-bottom: 25px;">Members Page<b-button variant="danger" style="width:10%; float:right; margin-right: 1%; margin-top:1px" @click="logout">Log Out</b-button></h1>
 
-      <!--div for buttons-->
-      <div id="tabButtons" style="width:100%; margin-bottom: 15px; margin-top: 10px">
-        <b-button id="btnDivProfile" style="width:30%" variant="primary"
-                v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Your Profile
-        </b-button>
-        <b-button id="btnDivRecord" style="width:30% ; margin:1%" variant="primary"
-                v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story
-        </b-button>
-        <b-button id="btnDivWatch" style="width:30%" variant="primary"
-                v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories
-        </b-button>
-      </div>
-      <!--.......................................end of div for buttons-->
-      <!--put profile here-->
-      <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
-        <h3>Your Profile</h3>
-        <p>Member Name {{this.memberName}}</p>
-        <p>Member Email {{email}}</p>
-        <p>Change Password </p>
-        <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
-        <span>Your Bio
+        <!--div for buttons-->
+        <div id="tabButtons" style="width:100%; margin-bottom: 15px; margin-top: 10px">
+          <b-button id="btnDivProfile" style="width:30%" variant="primary"
+                    v-on:click="ProfileIsHidden = false, RecordIsHidden = true, WatchIsHidden = true">Your Profile
+          </b-button>
+          <b-button id="btnDivRecord" style="width:30% ; margin:1%" variant="primary"
+                    v-on:click="ProfileIsHidden = true, RecordIsHidden = false, WatchIsHidden = true">Record Story
+          </b-button>
+          <b-button id="btnDivWatch" style="width:30%" variant="primary"
+                    v-on:click="ProfileIsHidden = true, RecordIsHidden = true, WatchIsHidden = false">Your Stories
+          </b-button>
+        </div>
+        <!--.......................................end of div for buttons-->
+        <!--put profile here-->
+        <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
+          <h3>Your Profile</h3>
+          <p>Member Name {{this.memberName}}</p>
+          <p>Member Email {{email}}</p>
+          <p>Change Password </p>
+          <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
+          <span>Your Bio
       <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
       <textarea v-model="message" placeholder="Enter a little bit about yourself "
                 style="width: 50%; height: 10%"></textarea></p></span>
-        <b-button variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
-      </div>
-      <!--end of profile Div.........-->
-      <!--start of record Div.........................................................-->
-      <div class="divRecord" style="width:100%;" v-if="!RecordIsHidden">
-        <!-- v-if="!RecordIsHidden"  change it back to this -->
-        <div id="clockTimerDiv " style="width:30%; margin-left: 4%; margin-top: 30px">
-          <div id="clockdiv" style="background-color: skyblue; padding:5px; margin: 2px;">
-            <p style="font-size: 16px; padding-top: -5px">Time Left</p>
-            <div style="padding-top: 5px">
-              <span class="minutes" id="minutes">{{minutes}}</span>
-              <div class="smalltext" >Minutes</div>
+          <b-button variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
+        </div>
+        <!--end of profile Div.........-->
+        <!--start of record Div.........................................................-->
+        <div class="divRecord" style="width:100%;" v-if="!RecordIsHidden">
+          <!-- v-if="!RecordIsHidden"  change it back to this -->
+          <div id="clockTimerDiv " style="width:30%; margin-left: 4%; margin-top: 30px">
+            <div id="clockdiv" style="background-color: skyblue; padding:5px; margin: 2px;">
+              <p style="font-size: 16px; padding-top: -5px">Time Left</p>
+              <div style="padding-top: 5px">
+                <span class="minutes" id="minutes">{{minutes}}</span>
+                <div class="smalltext" >Minutes</div>
+              </div>
+              <div style="padding-top: 5px">
+                <span class="seconds" id="seconds">{{seconds}}</span>
+                <div class="smalltext" >Seconds</div>
+                <!--<div class="smalltext" id="seconds">{{seconds}}</div>
+                <div class="smalltext">Seconds</div>-->
+              </div>
             </div>
-            <div style="padding-top: 5px">
-              <span class="seconds" id="seconds">{{seconds}}</span>
-              <div class="smalltext" >Seconds</div>
-              <!--<div class="smalltext" id="seconds">{{seconds}}</div>
-              <div class="smalltext">Seconds</div>-->
-            </div>
-          </div>
-          <!-- ............................................................ -->
-          <div id="clockdiv2" style="background-color: #62ecfb; padding:5px; margin: 2px;">
+            <!-- ............................................................ -->
+            <div id="clockdiv2" style="background-color: #62ecfb; padding:5px; margin: 2px;">
               <p style="font-size: 16px; padding-top: -5px">Time Used</p>
-            <div style="padding-top: 5px">
-              <span class="minutes" id="minutesUsed">{{minutesUsed}}</span>
-              <div class="smalltext" >Minutes</div>
-              <!--<div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
-              <div class="smalltext">Minutes</div>-->
+              <div style="padding-top: 5px">
+                <span class="minutes" id="minutesUsed">{{minutesUsed}}</span>
+                <div class="smalltext" >Minutes</div>
+                <!--<div class="smalltext" id="minutesUsed">{{minutesUsed}}</div>
+                <div class="smalltext">Minutes</div>-->
+              </div>
+              <div style="padding-top: 5px">
+                <span class="secondsUsed" id="secondsUsed">{{secondsUsed}}</span>
+                <div class="smalltext" >Seconds</div>
+                <!-- <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
+                 <div class="smalltext">Seconds</div>-->
+              </div>
             </div>
-            <div style="padding-top: 5px">
-              <span class="secondsUsed" id="secondsUsed">{{secondsUsed}}</span>
-              <div class="smalltext" >Seconds</div>
-             <!-- <div class="smalltext" id="secondsUsed">{{secondsUsed}}</div>
-              <div class="smalltext">Seconds</div>-->
-            </div>
-          </div>
-        </div> <!-- end of Timer Div... -->
-        <div id="divRecordStory" style="width:30%; margin-left: 1%">
-          <video id="vid1" controls style="width: 100%; height:100%"></video>
-          <video id="vid2" controls style="width: 100%; height:100%; display:none"></video>
-          <p>
-            <b-button variant="primary" style="margin-top: 30px;" id="btnStart" v-on:click="start">Start Recording</b-button>
-            <b-button variant="danger" style="margin-top: 30px;" id="btnStop" v-on:click="stop">Stop Recording</b-button>
-          </p>
-          <p>
-            <button id="btnSave" style="display:none">Save Recording</button>
-            <button id="btnCancel" style="display:none">Cancel Recording</button>
-          </p>
-        </div> <!-- End of DivRecordStory........ -->
+          </div> <!-- end of Timer Div... -->
+          <div id="divRecordStory" style="width:30%; margin-left: 1%">
+            <video id="vid1" controls style="width: 100%; height:100%"></video>
+            <video id="vid2" controls style="width: 100%; height:100%; display:none"></video>
+            <p>
+              <b-button variant="primary" style="margin-top: 30px;" id="btnStart" v-on:click="start">Start Recording</b-button>
+              <b-button variant="danger" style="margin-top: 30px;" id="btnStop" v-on:click="stop">Stop Recording</b-button>
+            </p>
+            <p>
+              <button id="btnSave" style="display:none">Save Recording</button>
+              <button id="btnCancel" style="display:none">Cancel Recording</button>
+            </p>
+          </div> <!-- End of DivRecordStory........ -->
 
-        <div id="saveStoryDiv" style="width:30%; margin-left: 1%"> <!-- save story here ................................ -->
-          <p>Please Enter Information on your Video Story</p>
-          <p>Story Title <input v-model="storyTitle" placeholder="Enter Story Title"></p> <!--v-model="storyTitle" -->
-          <div style="margin-left: 10%">
-            <!-- language drop down list -->
-            <!-- Ref:https://stackoverflow.com/questions/46789710/how-to-get-selected-item-of-b-form-select-with-vue-js-v-onchange-does-nothing -->
-            <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
-               <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
-                             :options="options"></b-form-select>
-              <div class="mt-3" style="width:3%"><strong>{{ languageDropdown }}</strong></div>
+          <div id="saveStoryDiv" style="width:30%; margin-left: 1%"> <!-- save story here ................................ -->
+            <p>Please Enter Information on your Video Story</p>
+            <p>Story Title <input v-model="storyTitle" placeholder="Enter Story Title"></p> <!--v-model="storyTitle" -->
+            <div style="margin-left: 10%">
+              <!-- language drop down list -->
+              <!-- Ref:https://stackoverflow.com/questions/46789710/how-to-get-selected-item-of-b-form-select-with-vue-js-v-onchange-does-nothing -->
+              <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+                <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
+                               :options="options"></b-form-select>
+                <div class="mt-3" style="width:3%"><strong>{{ languageDropdown }}</strong></div>
+              </div>
+              <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+                <!-- Country drop down list -->
+                <b-form-select v-on:change="getSelectedCountry" variant="primary" v-model="countryDropdown"
+                               :options="options2"></b-form-select>
+                <div class="mt-3"><strong>{{ countryDropdown }}</strong></div>
+              </div>
+              <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
+                <!-- Decade drop down list -->
+                <b-form-select v-on:change="getSelectedDecade" variant="primary" v-model="decadeDropdown"
+                               :options="options3"></b-form-select>
+                <div class="mt-3"><strong>{{ decadeDropdown }}</strong></div>
+              </div>
             </div>
-            <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
-              <!-- Country drop down list -->
-              <b-form-select v-on:change="getSelectedCountry" variant="primary" v-model="countryDropdown"
-                             :options="options2"></b-form-select>
-              <div class="mt-3"><strong>{{ countryDropdown }}</strong></div>
-            </div>
-            <div style="width:32%; float:left; margin-right: 1%; margin-top:1px">
-              <!-- Decade drop down list -->
-              <b-form-select v-on:change="getSelectedDecade" variant="primary" v-model="decadeDropdown"
-                             :options="options3"></b-form-select>
-              <div class="mt-3"><strong>{{ decadeDropdown }}</strong></div>
-            </div>
-          </div>
-          <span>Tell Us About this Story
+            <span>Tell Us About this Story
       <p style="white-space: pre-line;">
       <textarea v-model="storyDescription" placeholder="Tell Us About This Story"
                 style="width: 100%; height: 20%; width:95%; margin-left: 0%"></textarea></p></span><!-- v-model="aboutStory"-->
-          <b-button id="btnSaveThisStory" variant="warning" style="color:white; width:96%; margin-left: 2%" v-on:click="btnSaveThisStory">SAVE This Story</b-button>
-          <b-button id="btnDoNotSaveStory" variant="danger" style="margin-top:5px; margin-bottom: 5px; color:white; width:96%; margin-left: 2%" v-on:click="btnDoNotSaveStory">Cancel</b-button>
-          {{newVideoMessage}}
-        </div> <!-- End ofsave story here div-->
-      </div>
-      <!-- end of record Div...........-->
-      <!--watch stories Div.........................................-->
-      <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
-        <h2>Your Stories</h2>
-        <!-- creates a new card for each video brought back from the database -->
-        <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-                style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
-                class="mb-2">
-          {{ n.storyCountry }}
-          {{ n.storyDecade }}
-          {{ n.storyDescription }}
-          {{ n.storyTitle }}
-          {{ n.storyLanguage }}
-          {{ n.storyMinutesUsed }}
-          {{ n.storySecondsUsed }}
-        </b-card>-->
-        <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-                style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
-                class="mb-2; overflow-hidden">
-          <b-row no-gutters>
-            <b-col md="5">
-              <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
-            </b-col>
-            <b-col md="7">
-              <b-card-title>{{ n.storyTitle }}</b-card-title>
+            <b-button id="btnSaveThisStory" variant="warning" style="color:white; width:96%; margin-left: 2%" v-on:click="btnSaveThisStory">SAVE This Story</b-button>
+            <b-button id="btnDoNotSaveStory" variant="danger" style="margin-top:5px; margin-bottom: 5px; color:white; width:96%; margin-left: 2%" v-on:click="btnDoNotSaveStory">Cancel</b-button>
+            {{newVideoMessage}}
+          </div> <!-- End ofsave story here div-->
+        </div>
+        <!-- end of record Div...........-->
+        <!--watch stories Div.........................................-->
+        <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
+          <h2>Your Stories</h2>
+          <!-- creates a new card for each video brought back from the database -->
+          <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+                  style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
+                  class="mb-2">
+            {{ n.storyCountry }}
+            {{ n.storyDecade }}
+            {{ n.storyDescription }}
+            {{ n.storyTitle }}
+            {{ n.storyLanguage }}
+            {{ n.storyMinutesUsed }}
+            {{ n.storySecondsUsed }}
+          </b-card>-->
+          <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+                  style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
+                  class="mb-2; overflow-hidden">
+            <b-row no-gutters>
+              <b-col md="5">
+                <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
+              </b-col>
+              <b-col md="7">
+                <b-card-title>{{ n.storyTitle }}</b-card-title>
 
-              <b-card-text>
-                {{ n.storyDescription }}
-              </b-card-text>
+                <b-card-text>
+                  {{ n.storyDescription }}
+                </b-card-text>
 
-            </b-col>
-          </b-row>
-        </b-card>
+              </b-col>
+            </b-row>
+          </b-card>
+        </div>
+        <!-- end of watch stories Div.....-->
       </div>
-      <!-- end of watch stories Div.....-->
-    </div>
-    <!-- end of member has signed in div... -->
-    <!-- Video PopUp display ...................................... -->
-    <div class="bs-example">
-      <!-- Button HTML (to Trigger Modal) -->
-      <a href="#myModal" ref="clickedOn"  data-toggle="modal"></a>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-      <!-- Modal HTML -->
-      <div id="myModal" class="modal fade">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title">Video Story</h4>
-            </div>
-            <div class="modal-body">
-              <iframe id="video" width="460" height="315" v-bind:src="videoRef" frameborder="0" allowfullscreen></iframe>
+      <!-- end of member has signed in div... -->
+      <!-- Video PopUp display ...................................... -->
+      <div class="bs-example">
+        <!-- Button HTML (to Trigger Modal) -->
+        <a href="#myModal" ref="clickedOn"  data-toggle="modal"></a>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <!-- Modal HTML -->
+        <div id="myModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button"  class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title">Video Story</h4>
+              </div>
+              <div class="modal-body">
+                <iframe id="video" width="460" height="315" v-bind:src="videoRef" frameborder="0" allowfullscreen></iframe>
+              </div>
             </div>
           </div>
         </div>
       </div>
+      <!-- End of Video PopUp display ...................................... -->
     </div>
-    <!-- End of Video PopUp display ...................................... -->
   </div>
 </template>
 
 <script>
 import members from '@/services/members'
 import videoStories from '@/services/videoStories'
+import $ from 'jquery'
 import axios from 'axios'
 import {fb} from '../firebase'
-import $ from 'jquery'
+
+import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
+// import App from 'App.vue';
+
+// Import the styles directly. (Or you could add them via script tags.)
+import 'bootstrap/dist/css/bootstrap.css'
+import 'bootstrap-vue/dist/bootstrap-vue.css'
+
 import Vue from 'vue'
 import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
 import VueSweetalert from 'vue-sweetalert'
+
 Vue.use(VueForm, {
   inputClasses: {
     valid: 'form-control-success',
@@ -213,6 +223,7 @@ Vue.use(VueForm, {
   }
 })
 
+Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueSweetalert)
 // const mongoose = require('mongoose')
@@ -245,8 +256,8 @@ export default {
         console.log('in mounted story ids' + res.data.members.storyId)
         this.memberName = res.data.members.MemberName
         /* this.MemberName = res.data.members.memberName
-        this._id = res.data.members.MemberId
-        this.storyId = res.data.members.storyId */
+          this._id = res.data.members.MemberId
+          this.storyId = res.data.members.storyId */
         let listOfStoryIds = res.data.members.storyId
         console.log(listOfStoryIds)
         this.getListOfStories(listOfStoryIds)
@@ -292,9 +303,10 @@ export default {
         {value: 'I Remember When...', text: 'I Remember When...'},
         {value: 'I Survived...', text: 'I Survived...'},
         {value: 'The Day I Met...', text: 'The Day I Met...'},
-        {value: null, text: '__________________'},
-        {value: null, text: 'It Happened In'},
-        {value: 'before', text: 'Before 1900'},
+        {value: 'Something Else', text: 'Something Else'},
+        {value: null, text: '__________________', disabled: true},
+        {value: 'It Happened Before 1900', text: 'It Happened Before 1900'},
+        {value: null, text: 'It Happened In The...', disabled: true},
         {value: '1900s', text: '1900s'},
         {value: '1910s', text: '1910s'},
         {value: '1920s', text: '1920s'},
@@ -363,19 +375,19 @@ export default {
 
       $(document).ready(function () {
         /* Get iframe src attribute value i.e. YouTube video url
-          and store it in a variable */
+            and store it in a variable */
         let url = $('#video').attr('src')
 
         // $('#btnTrigger').click();
         /* Assign empty url value to the iframe src attribute when
-          modal hide, which stop the video playing */
+            modal hide, which stop the video playing */
         $('#myModal').trigger().on('hide.bs.modal', function () {
           $(this).find('video')[0].pause()
           $('#video').attr('src', '')
         })
 
         /* Assign the initially stored url back to the iframe src
-          attribute when modal is displayed again */
+            attribute when modal is displayed again */
         $('#myModal').on('show.bs.modal', function () {
           $('#video').attr('src', url)
         })
@@ -725,6 +737,25 @@ function getTimeRemaining (endtime) {
 </script>
 
 <style scoped>
+  .hero {
+    height: 100vh;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero .lead {
+    font-weight: 200;
+    font-size: 2.5rem;
+  }
+  .vue-title {
+    text-align: Left;
+    font-size: 20pt;
+    font-weight: 100;
+    margin-bottom: 10px;
+    margin-left: 10px;
+    color: cornflowerblue;
+  }
   .divRecord {
     display: flex;
     flex-direction: row;
@@ -751,16 +782,16 @@ function getTimeRemaining (endtime) {
     font-family: sans-serif;
     font-weight: 100;
   }*/
-
-  .vue-title {
-    margin-top: 5px;
-    text-align: left;
-    font-size: 20pt;
-    font-weight: 100;
-    margin-bottom: 10px;
-    margin-left: 10px;
-    color: cornflowerblue;
-  }
+  /*
+    .vue-title {
+      margin-top: 5px;
+      text-align: left;
+      font-size: 20pt;
+      font-weight: 100;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      color: cornflowerblue;
+    }*/
 
   h3 {
     font-size: 15pt;

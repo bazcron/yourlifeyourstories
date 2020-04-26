@@ -1,40 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Your Life Your Stories</title>
-  </head>
-  <link rel="stylesheet"
-        href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" />
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  <body>
-    <div id="app"></div>
-    <!-- built files will be auto injected -->
-  <script>
-    function join () {
-      let txt=""
-      let person = prompt('Please Enter Your Name:', 'Enter Name Here')
-      let password = prompt('Enter Enter a Password:', 'Password')
-      if (person == null || person === '' || password == null || password == '') {
-        txt = 'Sorry Please Try Again.'
-      } else {
-        txt = 'Hello ' + person + ' Welcome. You have created an Account'
-      }
-      document.getElementById('popUp').innerHTML = txt
-    }
-    function signIn () {
-      let txt=""
-      let person = prompt('Please Enter Your Name:', 'Enter Name Here')
-      let password = prompt('Please Enter Your Password:', 'Password')
-      if (person == null || person === '' || password == null || password == '') {
-        txt = 'Sorry That Information is Incorrect.'
-      } else {
-        txt = 'Hello ' + person + ' You Have Successfully Signed In'
-      }
-      document.getElementById('popUp').innerHTML = txt
-    }
-  </script>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Your Life Your Stories</title>
+</head>
+<!-- <link rel="stylesheet"
+       href="https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.css" />-->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<body>
+<div id="app"></div>
+<!-- built files will be auto injected -->
+<script>
+  /* function join () {
+     let txt=""
+     let person = prompt('Please Enter Your Name:', 'Enter Name Here')
+     let password = prompt('Enter Enter a Password:', 'Password')
+     if (person == null || person === '' || password == null || password == '') {
+       txt = 'Sorry Please Try Again.'
+     } else {
+       txt = 'Hello ' + person + ' Welcome. You have created an Account'
+     }
+     document.getElementById('popUp').innerHTML = txt
+   }
+   function signIn () {
+     let txt=""
+     let person = prompt('Please Enter Your Name:', 'Enter Name Here')
+     let password = prompt('Please Enter Your Password:', 'Password')
+     if (person == null || person === '' || password == null || password == '') {
+       txt = 'Sorry That Information is Incorrect.'
+     } else {
+       txt = 'Hello ' + person + ' You Have Successfully Signed In'
+     }
+     document.getElementById('popUp').innerHTML = txt
+   }*/
+</script>
+</body>
 </html>

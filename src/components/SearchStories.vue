@@ -3,59 +3,59 @@
     <h1 class="vue-title">Search Members Stories</h1>
 
     <div style="width:20%; margin-left: 20%; float:left; margin-right: 1%; margin-top:1px">
-    <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
-                   :options="options"></b-form-select>
-    <div class="mt-3"><strong>{{ languageDropdown }}</strong></div>
-  </div>
-  <div style="width:20%; float:left; margin-right: 1%; margin-top:1px">
-    <!-- Country drop down list -->
-    <b-form-select v-on:change="getSelectedCountry" variant="primary" v-model="countryDropdown"
-                   :options="options2"></b-form-select>
-    <div class="mt-3"><strong>{{ countryDropdown }}</strong></div>
-  </div>
-  <div style="width:20%; float:left; margin-right: 1%; margin-top:1px">
-    <!-- Decade drop down list -->
-    <b-form-select v-on:change="getSelectedDecade" variant="primary" v-model="decadeDropdown"
-                   :options="options3"></b-form-select>
-    <div class="mt-3"><strong>{{ decadeDropdown }}</strong></div>
-  </div>
+      <b-form-select v-on:change="getSelectedLanguage" variant="primary" v-model="languageDropdown"
+                     :options="options"></b-form-select>
+      <div class="mt-3"><strong>{{ languageDropdown }}</strong></div>
+    </div>
+    <div style="width:20%; float:left; margin-right: 1%; margin-top:1px">
+      <!-- Country drop down list -->
+      <b-form-select v-on:change="getSelectedCountry" variant="primary" v-model="countryDropdown"
+                     :options="options2"></b-form-select>
+      <div class="mt-3"><strong>{{ countryDropdown }}</strong></div>
+    </div>
+    <div style="width:20%; float:left; margin-right: 1%; margin-top:1px">
+      <!-- Decade drop down list -->
+      <b-form-select v-on:change="getSelectedDecade" variant="primary" v-model="decadeDropdown"
+                     :options="options3"></b-form-select>
+      <div class="mt-3"><strong>{{ decadeDropdown }}</strong></div>
+    </div>
     <b-button id="searchForVideos" variant="warning" style="margin-top:5px;
      margin-bottom: 5px; color:white; width:60%; margin-left: 2%" v-on:click="searchForVideos">Search</b-button>
     {{ NoVideosReturned}}
-  <div id="divWatch" style="width:90%; margin-left: 5%" >
-    <!-- creates a new card for each video brought back from the database -->
-    <!-- Ref: https://bootstrap-vue.js.org/docs/components/card/ -->
-    <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-            style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
-            class="mb-2">
-      {{ n.storyCountry }}
-      {{ n.storyDecade }}
-      {{ n.storyDescription }}
-      {{ n.storyTitle }}
-      {{ n.storyLanguage }}
-      {{ n.storyMinutesUsed }}
-      {{ n.storySecondsUsed }}
-    </b-card>-->
-    <div>
-      <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-              style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
-              class="mb-2; overflow-hidden">
-        <b-row no-gutters>
-          <b-col md="5">
-            <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
-          </b-col>
-          <b-col md="7">
-            <b-card-title>{{ n.storyTitle }}</b-card-title>
+    <div id="divWatch" style="width:90%; margin-left: 5%" >
+      <!-- creates a new card for each video brought back from the database -->
+      <!-- Ref: https://bootstrap-vue.js.org/docs/components/card/ -->
+      <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+              style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
+              class="mb-2">
+        {{ n.storyCountry }}
+        {{ n.storyDecade }}
+        {{ n.storyDescription }}
+        {{ n.storyTitle }}
+        {{ n.storyLanguage }}
+        {{ n.storyMinutesUsed }}
+        {{ n.storySecondsUsed }}
+      </b-card>-->
+      <div>
+        <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+                style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
+                class="mb-2; overflow-hidden">
+          <b-row no-gutters>
+            <b-col md="5">
+              <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
+            </b-col>
+            <b-col md="7">
+              <b-card-title>{{ n.storyTitle }}</b-card-title>
 
               <b-card-text>
                 {{ n.storyDescription }}
               </b-card-text>
 
-          </b-col>
-        </b-row>
-      </b-card>
+            </b-col>
+          </b-row>
+        </b-card>
+      </div>
     </div>
-  </div>
     <!-- Video PopUp display ...................................... -->
     <div class="bs-example">
       <!-- Button HTML (to Trigger Modal) -->
@@ -140,7 +140,10 @@ export default {
         {value: 'I Remember When...', text: 'I Remember When...'},
         {value: 'I Survived...', text: 'I Survived...'},
         {value: 'The Day I Met...', text: 'The Day I Met...'},
-        {value: 'before', text: 'Before 1900'},
+        {value: 'Something Else', text: 'Something Else'},
+        {value: null, text: '__________________', disabled: true},
+        {value: 'It Happened Before 1900', text: 'It Happened Before 1900'},
+        {value: null, text: 'It Happened In The...', disabled: true},
         {value: '1900s', text: '1900s'},
         {value: '1910s', text: '1910s'},
         {value: '1920s', text: '1920s'},
@@ -171,19 +174,19 @@ export default {
 
       $(document).ready(function () {
         /* Get iframe src attribute value i.e. YouTube video url
-          and store it in a variable */
+            and store it in a variable */
         let url = $('#video').attr('src')
 
         // $('#btnTrigger').click();
         /* Assign empty url value to the iframe src attribute when
-          modal hide, which stop the video playing */
+            modal hide, which stop the video playing */
         $('#myModal').trigger().on('hide.bs.modal', function () {
           $(this).find('video')[0].pause()
           $('#video').attr('src', '')
         })
 
         /* Assign the initially stored url back to the iframe src
-          attribute when modal is displayed again */
+            attribute when modal is displayed again */
         $('#myModal').on('show.bs.modal', function () {
           $('#video').attr('src', url)
         })
@@ -311,8 +314,18 @@ export default {
 </script>
 
 <style scoped>
-  .vue-title{
-    margin-top: 10px;
+  .hero {
+    height: 100vh;
+    margin-top: 30px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+  }
+  .hero .lead {
+    font-weight: 200;
+    font-size: 2.5rem;
+  }
+  .vue-title {
     text-align: left;
     font-size: 20pt;
     font-weight: 100;
@@ -320,39 +333,48 @@ export default {
     margin-left: 10px;
     color: cornflowerblue;
   }
-  #app1 {
-    width: 95%;
-    margin: 0;
-  }
-   .required-field > label::after {
-    content: '*';
-    color: red;
-    margin-left: 0.25rem;
-  }
-  label {
-    display: inline-block;
-    width: 30%;
-    text-align: center;
-    font-size: medium;
-    background-color: dimgray;
-    color: white;
-    height: 30px;
-  }
-  #keyWordInput{
-    position: center;
-    background-color: darkgrey;
-    color: white;
-  }
-   p {
-    margin-top: 20px;
-  }
-  input {
-    border: 1px solid silver;
-    border-radius: 4px;
-    background: white;
-    padding: 5px 10px;
-    width: 540px;
-  }
+  /*  .vue-title{
+      margin-top: 10px;
+      text-align: left;
+      font-size: 20pt;
+      font-weight: 100;
+      margin-bottom: 10px;
+      margin-left: 10px;
+      color: cornflowerblue;
+    }
+    #app1 {
+      width: 95%;
+      margin: 0;
+    }
+     .required-field > label::after {
+      content: '*';
+      color: red;
+      margin-left: 0.25rem;
+    }
+    label {
+      display: inline-block;
+      width: 30%;
+      text-align: center;
+      font-size: medium;
+      background-color: dimgray;
+      color: white;
+      height: 30px;
+    }
+    #keyWordInput{
+      position: center;
+      background-color: darkgrey;
+      color: white;
+    }
+     p {
+      margin-top: 20px;
+    }
+    input {
+      border: 1px solid silver;
+      border-radius: 4px;
+      background: white;
+      padding: 5px 10px;
+      width: 540px;
+    }*/
 </style>
 
 //
