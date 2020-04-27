@@ -429,9 +429,8 @@ export default {
       let videoStoryId = this.resultArray[index]._id
       videoStories.deleteVideoStory(videoStoryId)
         .then(response => {
-          console.log('video story deleted' + this.message)
+          console.log('video story deleted')
           this.resultArray.splice(index, 1)
-          console.log('the id of the video story to delete ' + this.resultArray[index]._id)
         })
         .catch(error => {
           console.log(error)
