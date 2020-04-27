@@ -216,6 +216,8 @@ import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
 import VueSweetalert from 'vue-sweetalert'
 
+let listOfStoryIds = ''
+
 Vue.use(VueForm, {
   inputClasses: {
     valid: 'form-control-success',
@@ -234,7 +236,7 @@ let finalMinutesUsed = 0
 let video = ''
 // ----------------- variables for the clock ...................
 let stopped = false
-let deadline = 1200000
+let totalTime = 1200000
 // import saveThisVideo from '@testvideo.webm'
 export default {
   name: 'Members',
@@ -247,21 +249,6 @@ export default {
     }
     this.findMemberName = ''
     this.findPassword = ''
-    // ............ Returning data about the signed in member............................
-    // eslint-disable-next-line standard/object-curly-even-spacing
-    axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
-      .then(res => {
-        console.log('in mounted member name' + res.data.members.MemberName)
-        console.log('in mounted member id' + res.data.members.MemberId)
-        console.log('in mounted story ids' + res.data.members.storyId)
-        this.memberName = res.data.members.MemberName
-        /* this.MemberName = res.data.members.memberName
-          this._id = res.data.members.MemberId
-          this.storyId = res.data.members.storyId */
-        let listOfStoryIds = res.data.members.storyId
-        console.log(listOfStoryIds)
-        this.getListOfStories(listOfStoryIds)
-      })
   },
   data () {
     return {
@@ -422,7 +409,7 @@ export default {
     //
     start () {
       stopped = false
-      initializeClock('clockdiv', deadline)
+      initializeClock('clockdiv', totalTime)
     },
     stop () {
       console.log('stop')
@@ -483,6 +470,15 @@ export default {
       // ................................................................................
       function saveNewVideo () {
         console.log('downloadUrl' + downloadTheUrl)
+        // convert minutes and seconds into milliseconds to store in db
+        finalMinutesUsed = (finalMinutesUsed * 60) * 1000
+        finalSecondsUsed = finalSecondsUsed * 1000
+        let timeUsed = finalMinutesUsed + finalSecondsUsed
+        totalTime = totalTime - timeUsed
+        console.log(finalSecondsUsed)
+        console.log(finalMinutesUsed)
+        console.log(timeUsed)
+
         let newVideo = {
           storyId: videoId,
           storyFirebaseRef: downloadTheUrl,
@@ -555,13 +551,29 @@ export default {
         // hides first Div and shows Member Div...................................
         this.showDiv = false
         this.showMemberDiv = true
+        // ............ Returning data about the signed in member............................
+        // eslint-disable-next-line standard/object-curly-even-spacing
+        axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+          .then(res => {
+            console.log('in mounted member name' + res.data.members.MemberName)
+            console.log('in mounted member id' + res.data.members.MemberId)
+            console.log('in mounted story VideoStorageTime: ' + res.data.members.VideoStorageTime)
+            this.memberName = res.data.members.MemberName
+            /* this.MemberName = res.data.members.memberName
+              this._id = res.data.members.MemberId
+              this.storyId = res.data.members.storyId */
+            totalTime = parseInt(res.data.members.VideoStorageTime)
+            listOfStoryIds = res.data.members.storyId
+            console.log(totalTime)
+            this.getListOfStories(listOfStoryIds)
+          })
       }, err => {
         console.log('error in signIn ')
         // console.log(err.response)
         this.error = err.response.data.error
       })
     },
-    logout: function (event) {
+    logout: function () {
       localStorage.clear()
       this.showDiv = true
       this.showMemberDiv = false
@@ -617,7 +629,7 @@ function allowAccessToVideoCamera () {
         video.src = window.URL.createObjectURL(mediaStreamObj)
       }
 
-      video.onloadedmetadata = function (ev) {
+      video.onloadedmetadata = function () {
         // show in the video element what is being captured by the webcam
         video.play()
       }
@@ -644,7 +656,7 @@ function allowAccessToVideoCamera () {
         mediaRecorder.start()
         console.log('started: ' + mediaRecorder.state)
         stopped = false
-        initializeClock('clockdiv', deadline)
+        initializeClock('clockdiv', totalTime)
       })
       stop.addEventListener('click', (ev) => {
         console.log('Video Recorder Stopped')
@@ -715,8 +727,8 @@ function getTimeRemaining (endtime) {
   let secondsUsedConnect = document.getElementById('secondsUsed')
   let minutesUsedConnect = document.getElementById('minutesUsed')
 
-  let secondsUsed = ((deadline - endtime) / 1000 % 60)
-  let minutesUsed = ((Math.floor((deadline / 1000 / 60) % 60)) - (Math.floor((endtime / 1000 / 60) % 60))) - 1
+  let secondsUsed = ((totalTime - endtime) / 1000 % 60)
+  let minutesUsed = ((Math.floor((totalTime / 1000 / 60) % 60)) - (Math.floor((endtime / 1000 / 60) % 60))) - 1
   if (minutesUsed === -1) {
     minutesUsed = 0
   }
