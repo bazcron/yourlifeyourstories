@@ -141,12 +141,13 @@
         <!--watch stories Div.........................................-->
         <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
           <!-- creates a new card for each video brought back from the database -->
-          <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
+          <b-card no-body   v-for="(n, index) in resultArray" :key = "index"
                   style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
                   class="mb-2; overflow-hidden">
             <b-row no-gutters>
               <b-col md="5">
-                <b-card-img src="https://picsum.photos/400/400/?image=25" alt="Image" class="rounded-0"></b-card-img>
+                <b-card-img src="https://picsum.photos/400/400/?image=25" @click="trigger" v-on:click="showThisVideo(index)" alt="Image" class="rounded-0"></b-card-img>
+<!--                <b-card-img src="./../yourlife.png" class="rounded-0"></b-card-img>-->
               </b-col>
               <b-col md="7">
                 <b-card-title>{{ n.storyTitle }}</b-card-title>
@@ -157,7 +158,9 @@
 
               </b-col>
             </b-row>
+            <b-button v-on:click="deleteThisVideo(index)" >Delete Video</b-button>
           </b-card>
+
         </div>
         <!-- end of watch stories Div.....-->
       </div>
@@ -195,8 +198,6 @@ import axios from 'axios'
 import {fb} from '../firebase'
 
 import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
-// import App from 'App.vue';
-
 // Import the styles directly. (Or you could add them via script tags.)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
@@ -206,6 +207,7 @@ import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
 import VueSweetalert from 'vue-sweetalert'
 import swal from 'sweetalert'
+// import App from 'App.vue';
 let listOfStoryIds = ''
 
 Vue.use(VueForm, {
@@ -420,6 +422,20 @@ export default {
     stop () {
       console.log('stop')
       stopped = true
+    },
+    deleteThisVideo: function (index) {
+      console.log('the index of the video to delete' + index)
+      console.log('the id of the video story to delete ' + this.resultArray[index]._id)
+      let videoStoryId = this.resultArray[index]._id
+      videoStories.deleteVideoStory(videoStoryId)
+        .then(response => {
+          console.log('video story deleted' + this.message)
+          this.resultArray.splice(index, 1)
+          console.log('the id of the video story to delete ' + this.resultArray[index]._id)
+        })
+        .catch(error => {
+          console.log(error)
+        })
     },
     btnDeleteAccount: function () {
       // eslint-disable-next-line standard/object-curly-even-spacing

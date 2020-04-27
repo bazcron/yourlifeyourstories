@@ -76,6 +76,7 @@ import Vue from 'vue'
 import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
 import VueSweetalert from 'vue-sweetalert'
+
 Vue.use(VueForm, {
   inputClasses: {
     valid: 'form-control-success',

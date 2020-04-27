@@ -1,4 +1,3 @@
-
 import Vue from 'vue'
 import App from './App'
 import VueSweetalert2 from 'vue-sweetalert2'
@@ -7,6 +6,7 @@ import BootstrapVue from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 import $ from 'jquery'
+
 Vue.use(VueSweetalert2)
 Vue.use(BootstrapVue)
 
