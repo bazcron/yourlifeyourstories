@@ -25,17 +25,6 @@
     <div id="divWatch" style="width:90%; margin-left: 5%" >
       <!-- creates a new card for each video brought back from the database -->
       <!-- Ref: https://bootstrap-vue.js.org/docs/components/card/ -->
-      <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-              style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
-              class="mb-2">
-        {{ n.storyCountry }}
-        {{ n.storyDecade }}
-        {{ n.storyDescription }}
-        {{ n.storyTitle }}
-        {{ n.storyLanguage }}
-        {{ n.storyMinutesUsed }}
-        {{ n.storySecondsUsed }}
-      </b-card>-->
       <div>
         <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
                 style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"

@@ -6,20 +6,23 @@
         <h1 class="vue-title">Sign In or Join</h1>
         <div class="container" style="display:flex; flex-direction:row; justify-content: space-around;">
           <div
-            style="background-color: cornflowerblue; padding: 2%; display:flex; flex-direction:column; justify-content: right">
+            style="background-color: #69b5ed; padding: 2%; display:flex; flex-direction:column; justify-content: right">
             <!-- ......................Join Div  -->
-            <p>Member Name <input v-model.trim="findMemberName" placeholder="Member Name"></p>
+            <p style="float:right; margin-top: 30%">Member Name <input  style="float:right;" v-model.trim="findMemberName" placeholder="Member Name"></p>
             <p>Member Password <input type="password" v-model="findPassword" placeholder="Password"></p>
-            <button id="signIn" v-on:click="signIn">Sign In</button>
+            <b-button variant="primary" style="margin-top:5px;" id="signIn" v-on:click="signIn">Sign In</b-button>
             {{error}}   <!-- ......................displayed an error if incorrect Sign in details entered   -->
           </div> <!-- .....................End of Sign in Div -->
-          <div style="background-color: #4685ed; padding: 2%; display:flex; flex-direction:column; justify-content: right">
+          <div style="background-color: #69b5ed; padding: 2%; display:flex; flex-direction:column; justify-content: right">
             <!-- ......................Sign In Div  -->
             <!--<span class="border border-primary" style="padding: 2%">  -->
-            <p>Name <input v-model="memberName" placeholder="Member Name"></p>
-            <p>Please Enter your Email <input v-model="email" placeholder="Email"></p>
+            <p>Name <input style="float:right" v-model="memberName" placeholder="Member Name"></p>
+            <p>Please Enter your Email <input style="float:right" v-model="email" placeholder="Email"></p>
             <p>Please Enter a Password <input type="password" v-model="password" placeholder="Password"></p>
-            <button id="join" v-on:click="join">Join</button>
+            <p>Please Tell Us A Little Bit About Yourself</p>
+            <span><textarea v-model="bio" hint="Enter a little bit about yourself "
+                            style="float:right; width: 100%; height: 95%"></textarea></span>
+            <b-button variant="primary" style="margin-top:5px;" id="join" v-on:click="join">Join</b-button>
             {{ errorJoining}}   <!-- ......................displayad an error if unable to join   -->
           </div> <!-- .....................End of Sign in Div -->
         </div>
@@ -41,20 +44,18 @@
           </b-button>
         </div>
         <!--.......................................end of div for buttons-->
-        <!--put profile here-->
+        <!--Start of Profile section ......................................-->
         <div id="divProfile" style="width:100%" v-if="!ProfileIsHidden">
-          <h3>Your Profile</h3>
           <p>Member Name {{this.memberName}}</p>
-          <p>Member Email {{email}}</p>
-          <p>Change Password </p>
-          <p>Member Date Of Birth {{dob}}</p>   <!--<input v-model="dob" placeholder="Date Of Birth"> -->
-          <span>Your Bio
-      <p style="white-space: pre-line;">{{ bio }}  <!--change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! -->
+          <p>Member Email {{this.email}}</p>
+          <p style="margin-left: auto; margin-right: auto; width: 8em; width:30%;">Your Bio : {{this.bio}}</p>
+      <!--<p style="white-space: pre-line;">{{ this.bio }}  &lt;!&ndash;change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! &ndash;&gt;
       <textarea v-model="message" placeholder="Enter a little bit about yourself "
-                style="width: 50%; height: 10%"></textarea></p></span>
-          <b-button variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
+                style="width: 50%; height: 10%"></textarea></p>-->
+          <b-button style="margin-top: 10%; width:30%;" variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
         </div>
         <!--end of profile Div.........-->
+        <!-- -->
         <!--start of record Div.........................................................-->
         <div class="divRecord" style="width:100%;" v-if="!RecordIsHidden">
           <!-- v-if="!RecordIsHidden"  change it back to this -->
@@ -136,21 +137,10 @@
           </div> <!-- End ofsave story here div-->
         </div>
         <!-- end of record Div...........-->
+        <!-- -->
         <!--watch stories Div.........................................-->
         <div id="divWatch" style="width:100%" v-if="!WatchIsHidden">
-          <h2>Your Stories</h2>
           <!-- creates a new card for each video brought back from the database -->
-          <!--<b-card @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
-                  style="border: 3px solid powderblue; display: inline-block; margin: 5px; width: 20%; height:20%"
-                  class="mb-2">
-            {{ n.storyCountry }}
-            {{ n.storyDecade }}
-            {{ n.storyDescription }}
-            {{ n.storyTitle }}
-            {{ n.storyLanguage }}
-            {{ n.storyMinutesUsed }}
-            {{ n.storySecondsUsed }}
-          </b-card>-->
           <b-card no-body @click="trigger" v-on:click="showThisVideo(index)" v-for="(n, index) in resultArray" :key = "index"
                   style="max-width: 540px; border: 3px solid powderblue; display: inline-block; margin: 5px; width: 30%; height:25%"
                   class="mb-2; overflow-hidden">
@@ -215,7 +205,7 @@ import Vue from 'vue'
 import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
 import VueSweetalert from 'vue-sweetalert'
-
+import swal from 'sweetalert'
 let listOfStoryIds = ''
 
 Vue.use(VueForm, {
@@ -249,6 +239,22 @@ export default {
     }
     this.findMemberName = ''
     this.findPassword = ''
+    // ............ Returning data about the signed in member............................
+    // eslint-disable-next-line standard/object-curly-even-spacing
+    axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+      .then(res => {
+        console.log('in mounted member name' + res.data.members.MemberName)
+        console.log('in mounted member id' + res.data.members.MemberId)
+        console.log('in mounted story ids' + res.data.members.storyId)
+        this.memberName = res.data.members.MemberName
+        /* this.MemberName = res.data.members.memberName
+        this._id = res.data.members.MemberId
+        this.storyId = res.data.members.storyId */
+        listOfStoryIds = ''
+        listOfStoryIds = res.data.members.storyId
+        console.log(listOfStoryIds)
+        this.getListOfStories(listOfStoryIds)
+      })
   },
   data () {
     return {
@@ -519,7 +525,8 @@ export default {
       let newMember = {
         memberName: this.memberName,
         email: this.email,
-        password: this.password
+        password: this.password,
+        bio: this.bio
       }
       console.log(newMember)
       members.addNewMember(newMember).then(res => {
@@ -563,6 +570,7 @@ export default {
               this._id = res.data.members.MemberId
               this.storyId = res.data.members.storyId */
             totalTime = parseInt(res.data.members.VideoStorageTime)
+            listOfStoryIds = ''
             listOfStoryIds = res.data.members.storyId
             console.log(totalTime)
             this.getListOfStories(listOfStoryIds)
@@ -582,6 +590,7 @@ export default {
 }
 
 // Video Capture from devices camera..................................................................................
+// Ref : https://www.youtube.com/watch?v=K6L38xk2rkk
 //
 let constraintObj = {
   audio: true,
@@ -690,6 +699,11 @@ function allowAccessToVideoCamera () {
     })
     .catch(function (err) {
       console.log(err.name, err.message)
+      swal({title: 'Please Allow Access To Your Video',
+        text: ' Oops! \n\n' +
+          'In order to Record Directly from your Screen, we need Access to your Video Camera. \n\n ' +
+         ' Please Refresh this page and Click on Allow when prompted to.',
+        icon: 'warning'})
     })
 }
 //
