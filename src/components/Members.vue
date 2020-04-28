@@ -440,21 +440,36 @@ export default {
         })
     },
     btnDeleteAccount: function () {
-      // eslint-disable-next-line standard/object-curly-even-spacing
-      axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
-        .then(res => {
-          console.log('in mounted member name ' + res.data.members.MemberId)
-          let memberId = res.data.members.MemberId
-          members.deleteMember(memberId)
-            .then(response => {
-              console.log('member deleted ' + this.message)
-              localStorage.clear()
-              this.showDiv = true
-              this.showMemberDiv = false
+      swal({title: 'Delete Account',
+        text: 'We Are Sorry To See You Leave \n\n WARNING!! This cannot be undone. \n\n ' +
+          'Are You Sure You Wish To Delete Your Account?',
+        icon: 'warning',
+        buttons: ['Cancel: Do Not Delete', 'Delete Account'],
+        dangerMode: true
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            // eslint-disable-next-line standard/object-curly-even-spacing
+            axios.get('http://localhost:3000/returnTokenData/', { headers: { token: localStorage.getItem('token')}})
+              .then(res => {
+                console.log('in mounted member name ' + res.data.members.MemberId)
+                let memberId = res.data.members.MemberId
+                members.deleteMember(memberId)
+                  .then(response => {
+                    console.log('member deleted ' + this.message)
+                    localStorage.clear()
+                    this.showDiv = true
+                    this.showMemberDiv = false
+                  })
+                  .catch(error => {
+                    console.log(error)
+                  })
+              })
+            swal('Your Account Has Been Deleted', {
             })
-            .catch(error => {
-              console.log(error)
-            })
+          } else {
+            swal('You Changed Your Mind, Your Account Is Still Active \n Thank You')
+          }
         })
     },
     btnSaveThisStory: function (event) { // do this next
