@@ -158,7 +158,7 @@
 
               </b-col>
             </b-row>
-            <b-button v-on:click="deleteThisVideo(index)" >Delete Video</b-button>
+            <b-button variant = 'danger' v-on:click="deleteThisVideo(index)" >Delete Video</b-button>
           </b-card>
 
         </div>
@@ -399,6 +399,7 @@ export default {
           console.log(' response data ' + response.data)
           console.log(response)
           // adds all video details and displays them on the screen.......................
+          this.resultArray = []
           this.resultArray.push(...response.data)
         })
     },
@@ -431,16 +432,30 @@ export default {
       stopped = true
     },
     deleteThisVideo: function (index) {
-      console.log('the index of the video to delete' + index)
-      console.log('the id of the video story to delete ' + this.resultArray[index]._id)
-      let videoStoryId = this.resultArray[index]._id
-      videoStories.deleteVideoStory(videoStoryId)
-        .then(response => {
-          console.log('video story deleted')
-          this.resultArray.splice(index, 1)
-        })
-        .catch(error => {
-          console.log(error)
+      swal({title: 'Delete This Video',
+        text: 'Are You Sure You Wish To Delete This Video \n\n WARNING!! This cannot be undone. \n\n ',
+        icon: 'warning',
+        buttons: ['Cancel: Do Not Delete', 'Delete Video'],
+        dangerMode: true
+      })
+        .then((willDelete) => {
+          if (willDelete) {
+            console.log('the index of the video to delete' + index)
+            console.log('the id of the video story to delete ' + this.resultArray[index]._id)
+            let videoStoryId = this.resultArray[index]._id
+            videoStories.deleteVideoStory(videoStoryId)
+              .then(response => {
+                console.log('video story deleted')
+                this.resultArray.splice(index, 1)
+              })
+              .catch(error => {
+                console.log(error)
+              })
+            swal('That Video Has Been Deleted', {
+            })
+          } else {
+            swal('You Changed Your Mind, Video Was Not Deleted')
+          }
         })
     },
     btnDeleteAccount: function () {
