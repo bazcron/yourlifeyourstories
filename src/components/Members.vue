@@ -131,8 +131,8 @@
       <p style="white-space: pre-line;">
       <textarea v-model="storyDescription" placeholder="Tell Us About This Story"
                 style="width: 100%; height: 20%; width:95%; margin-left: 0%"></textarea></p></span><!-- v-model="aboutStory"-->
-            <b-button id="btnSaveThisStory" variant="warning" style="color:white; width:96%; margin-left: 2%" v-on:click="btnSaveThisStory">SAVE This Story</b-button>
-            <b-button id="btnDoNotSaveStory" variant="danger" style="margin-top:5px; margin-bottom: 5px; color:white; width:96%; margin-left: 2%" v-on:click="btnDoNotSaveStory">Cancel</b-button>
+            <b-button id="btnSaveThisStory"   variant="warning" style="color:white; width:96%; margin-left: 2%" v-on:click="btnSaveThisStory">SAVE This Story</b-button>
+            <b-button id="btnDoNotSaveStory"  variant="danger" style="margin-top:5px; margin-bottom: 5px; color:white; width:96%; margin-left: 2%" v-on:click="btnDoNotSaveStory">Cancel</b-button>
             {{newVideoMessage}}
           </div> <!-- End ofsave story here div-->
         </div>
@@ -233,6 +233,8 @@ export default {
     if (localStorage.getItem('token') != null) {
       this.showDiv = false
       this.showMemberDiv = true
+      document.getElementById('btnSaveThisStory').disabled = true
+      document.getElementById('btnDoNotSaveStory').disabled = true
       allowAccessToVideoCamera()
     }
     this.findMemberName = ''
@@ -356,6 +358,10 @@ export default {
     },
     btnDoNotSaveStory () {
       // show a warning message first....
+      document.getElementById('btnSaveThisStory').disabled = true
+      document.getElementById('btnDoNotSaveStory').disabled = true
+      document.getElementById('btnStop').disabled = false
+      document.getElementById('btnStart').disabled = false
       video.play()
       console.log('cancel video & cancel video save')
     },
@@ -417,6 +423,11 @@ export default {
     },
     stop () {
       console.log('stop')
+      document.getElementById('btnSaveThisStory').disabled = false
+      document.getElementById('btnDoNotSaveStory').disabled = false
+      document.getElementById('btnStop').disabled = true
+      document.getElementById('btnStart').disabled = true
+
       stopped = true
     },
     deleteThisVideo: function (index) {
@@ -538,6 +549,10 @@ export default {
           console.log(err.response)
         })
       }
+      document.getElementById('btnSaveThisStory').disabled = true
+      document.getElementById('btnDoNotSaveStory').disabled = true
+      document.getElementById('btnStop').disabled = false
+      document.getElementById('btnStart').disabled = false
     },
     //
     // Create an Account...........................................................................................
@@ -865,13 +880,13 @@ function getTimeRemaining (endtime) {
   #clockdiv2 > div {
     padding: 10px;
     border-radius: 3px;
-    background: #22a09d;
+    background: #3c74a0;
     display: inline-block;
   }
   #clockdiv2 div > span {
     padding: 10px;
     border-radius: 3px;
-    background: #62ecfb;
+    background: skyblue;
     display: inline-block;
   }
   .smalltext {
