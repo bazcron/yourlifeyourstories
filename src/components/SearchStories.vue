@@ -132,21 +132,21 @@ export default {
         {value: 'The Day I Met...', text: 'The Day I Met...'},
         {value: 'Something Else', text: 'Something Else'},
         {value: null, text: '__________________', disabled: true},
-        {value: 'It Happened Before 1900', text: 'It Happened Before 1900'},
         {value: null, text: 'It Happened In The...', disabled: true},
-        {value: '1900s', text: '1900s'},
-        {value: '1910s', text: '1910s'},
-        {value: '1920s', text: '1920s'},
-        {value: '1930s', text: '1930s'},
-        {value: '1940s', text: '1940s'},
-        {value: '1950s', text: '1950s'},
-        {value: '1960s', text: '1960s'},
-        {value: '1970s', text: '1970s'},
-        {value: '1980s', text: '1980s'},
-        {value: '1990s', text: '1990s'},
-        {value: '2000s', text: '2000s'},
+        {value: '2020s', text: '2020s'},
         {value: '2010s', text: '2010s'},
-        {value: '2020s', text: '2020s'}
+        {value: '2000s', text: '2000s'},
+        {value: '1990s', text: '1990s'},
+        {value: '1980s', text: '1980s'},
+        {value: '1970s', text: '1970s'},
+        {value: '1960s', text: '1960s'},
+        {value: '1950s', text: '1950s'},
+        {value: '1940s', text: '1940s'},
+        {value: '1930s', text: '1930s'},
+        {value: '1920s', text: '1920s'},
+        {value: '1910s', text: '1910s'},
+        {value: '1900s', text: '1900s'},
+        {value: 'It Happened Before 1900', text: 'It Happened Before 1900'}
       ]
     }
   },
@@ -220,7 +220,7 @@ export default {
           console.log(err.response)
           this.NoVideosReturned = err.response.data.error
         })
-      } /* else if (storyCountryText !== 'Country' && storyDecadeText !== 'Category') {
+      } else if (storyCountryText !== 'Country' && storyDecadeText !== 'Category') {
         console.log('..' + storyCountryText + '..' + storyDecadeText + '..')
         searchOptions = storyCountryText + ',' + storyDecadeText
         searchForVideos.getVideosBasedOnCountryDecade(searchOptions).then(response => { // .then(response => response.json())
@@ -285,8 +285,8 @@ export default {
         }, err => {
           console.log(err.response)
           this.NoVideosReturned = err.response.data.error
-        }) */
-      // }
+        })
+      }
     },
     getSelectedLanguage: function (language) { // gets a the language value from dropdown list
       console.log(language)
