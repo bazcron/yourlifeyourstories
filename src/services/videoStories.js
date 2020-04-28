@@ -15,10 +15,10 @@ export default {
     console.log('inside get for listOfStoryIds ' + listOfStoryIds)
     return Api().get(`/getVideoStories/${listOfStoryIds}`)
   },
-  updateMembersVideoStorageTime (timeRemaining) {
+  /* updateMembersVideoStorageTime (timeRemaining) {
     return Api().put('/updateMembersVideoStorageTime', timeRemaining,
       { headers: {'Content-type': 'application/json'} })
-  },
+  }, */
   getVideosBasedOnSearch (searchOptions) {
     console.log('inside get Videos based on full search ' + searchOptions)
     return Api().get(`/getVideosBasedOnSearch/${searchOptions}`)
@@ -46,5 +46,8 @@ export default {
   getVideosBasedOnDecade (searchOptions) {
     console.log('inside get Videos based on decade ' + searchOptions)
     return Api().get(`/getVideosBasedOnDecade/${searchOptions}`)
+  },
+  removeVideoIdFromMember (id) {
+    return Api().put(`/removeVideoIdFromMember/${id}`)
   }
 }

@@ -49,9 +49,9 @@
           <p>Member Name {{this.memberName}}</p>
           <p>Member Email {{this.email}}</p>
           <p style="margin-left: auto; margin-right: auto; width: 8em; width:30%;">Your Bio : {{this.bio}}</p>
-      <!--<p style="white-space: pre-line;">{{ this.bio }}  &lt;!&ndash;change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! &ndash;&gt;
-      <textarea v-model="message" placeholder="Enter a little bit about yourself "
-                style="width: 50%; height: 10%"></textarea></p>-->
+          <!--<p style="white-space: pre-line;">{{ this.bio }}  &lt;!&ndash;change this to BIO !!!!!!!!!!!!!!!!!!!!!!!!!! &ndash;&gt;
+          <textarea v-model="message" placeholder="Enter a little bit about yourself "
+                    style="width: 50%; height: 10%"></textarea></p>-->
           <b-button style="margin-top: 10%; width:30%;" variant = 'danger' id="btnDeleteAccount" v-on:click="btnDeleteAccount">Delete Account</b-button>
         </div>
         <!--end of profile Div.........-->
@@ -147,7 +147,7 @@
             <b-row no-gutters>
               <b-col md="5">
                 <b-card-img src="https://picsum.photos/400/400/?image=25" @click="trigger" v-on:click="showThisVideo(index)" alt="Image" class="rounded-0"></b-card-img>
-<!--                <b-card-img src="./../yourlife.png" class="rounded-0"></b-card-img>-->
+                <!--                <b-card-img src="./../yourlife.png" class="rounded-0"></b-card-img>-->
               </b-col>
               <b-col md="7">
                 <b-card-title>{{ n.storyTitle }}</b-card-title>
@@ -196,12 +196,10 @@ import videoStories from '@/services/videoStories'
 import $ from 'jquery'
 import axios from 'axios'
 import {fb} from '../firebase'
-
 import BootstrapVue from 'bootstrap-vue/dist/bootstrap-vue.esm'
 // Import the styles directly. (Or you could add them via script tags.)
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
-
 import Vue from 'vue'
 import VueForm from 'vueform'
 import Vuelidate from 'vuelidate'
@@ -209,14 +207,12 @@ import VueSweetalert from 'vue-sweetalert'
 import swal from 'sweetalert'
 // import App from 'App.vue';
 let listOfStoryIds = ''
-
 Vue.use(VueForm, {
   inputClasses: {
     valid: 'form-control-success',
     invalid: 'form-control-danger'
   }
 })
-
 Vue.use(BootstrapVue)
 Vue.use(Vuelidate)
 Vue.use(VueSweetalert)
@@ -250,8 +246,8 @@ export default {
         console.log('in mounted story ids' + res.data.members.storyId)
         this.memberName = res.data.members.MemberName
         /* this.MemberName = res.data.members.memberName
-        this._id = res.data.members.MemberId
-        this.storyId = res.data.members.storyId */
+          this._id = res.data.members.MemberId
+          this.storyId = res.data.members.storyId */
         listOfStoryIds = ''
         listOfStoryIds = res.data.members.storyId
         console.log(listOfStoryIds)
@@ -370,22 +366,19 @@ export default {
       this.videoRef = this.resultArray[e].storyFirebaseRef.toString()
       console.log('video to text ' + this.videoRef)
       // this.$refs.clickedOn.click()
-
       $(document).ready(function () {
         /* Get iframe src attribute value i.e. YouTube video url
-            and store it in a variable */
+              and store it in a variable */
         let url = $('#video').attr('src')
-
         // $('#btnTrigger').click();
         /* Assign empty url value to the iframe src attribute when
-            modal hide, which stop the video playing */
+              modal hide, which stop the video playing */
         $('#myModal').trigger().on('hide.bs.modal', function () {
           $(this).find('video')[0].pause()
           $('#video').attr('src', '')
         })
-
         /* Assign the initially stored url back to the iframe src
-            attribute when modal is displayed again */
+              attribute when modal is displayed again */
         $('#myModal').on('show.bs.modal', function () {
           $('#video').attr('src', url)
         })
@@ -442,7 +435,7 @@ export default {
     btnDeleteAccount: function () {
       swal({title: 'Delete Account',
         text: 'We Are Sorry To See You Leave \n\n WARNING!! This cannot be undone. \n\n ' +
-          'Are You Sure You Wish To Delete Your Account?',
+            'Are You Sure You Wish To Delete Your Account?',
         icon: 'warning',
         buttons: ['Cancel: Do Not Delete', 'Delete Account'],
         dangerMode: true
@@ -480,7 +473,6 @@ export default {
       let storyDecadeText = this.decade
       let storyDescriptionText = this.storyDescription
       let memberNameText = this.memberName
-
       // create a unique id for each video......................................
       let videoId = this.storyTitle
       console.log(videoId)
@@ -493,9 +485,7 @@ export default {
       console.log('Video ' + blob)
       let videoStorageRef = fb.storage().ref('Videos/' + blob + videoId)
       let uploadTask = videoStorageRef.put(blob)
-
       uploadTask.on('state_changed', function (snapshot) {
-
       }, (error) => {
         console.log(error)
       }, () => {
@@ -517,7 +507,6 @@ export default {
         console.log(finalSecondsUsed)
         console.log(finalMinutesUsed)
         console.log(timeUsed)
-
         let newVideo = {
           storyId: videoId,
           storyFirebaseRef: downloadTheUrl,
@@ -579,7 +568,6 @@ export default {
         password: this.findPassword
       }
       console.log('inside SignIn' + memberLogin.memberName + memberLogin.password)
-
       // Sends name and password to server and checks both........................
       // if name and password are Incorrect it drops down to the err method and handles the error
       // else it displays the main part of Member page and sets a token to localstorage
@@ -600,8 +588,8 @@ export default {
             console.log('in mounted story VideoStorageTime: ' + res.data.members.VideoStorageTime)
             this.memberName = res.data.members.MemberName
             /* this.MemberName = res.data.members.memberName
-              this._id = res.data.members.MemberId
-              this.storyId = res.data.members.storyId */
+                this._id = res.data.members.MemberId
+                this.storyId = res.data.members.storyId */
             totalTime = parseInt(res.data.members.VideoStorageTime)
             listOfStoryIds = ''
             listOfStoryIds = res.data.members.storyId
@@ -621,7 +609,6 @@ export default {
     }
   }
 }
-
 // Video Capture from devices camera..................................................................................
 // Ref : https://www.youtube.com/watch?v=K6L38xk2rkk
 //
@@ -633,7 +620,6 @@ let constraintObj = {
     height: {min: 480, ideal: 720, max: 1080}
   }
 }
-
 // handle older browsers that might implement getUserMedia in some way
 if (navigator.mediaDevices === undefined) {
   navigator.mediaDevices = {}
@@ -670,12 +656,10 @@ function allowAccessToVideoCamera () {
         // old version
         video.src = window.URL.createObjectURL(mediaStreamObj)
       }
-
       video.onloadedmetadata = function () {
         // show in the video element what is being captured by the webcam
         video.play()
       }
-
       // add listeners for saving video/audio
       let vid2 = document.getElementById('vid2')
       let vid1 = document.getElementById('vid1')
@@ -687,7 +671,6 @@ function allowAccessToVideoCamera () {
       let mediaRecorder = new MediaRecorder(mediaStreamObj)
       let chunks = []
       let recordBtnClicked = document.getElementById('btnDivRecord')
-
       recordBtnClicked.addEventListener('click', (ev) => {
       }) // ..........................................................................
       start.addEventListener('click', (ev) => {
@@ -734,8 +717,8 @@ function allowAccessToVideoCamera () {
       console.log(err.name, err.message)
       swal({title: 'Please Allow Access To Your Video',
         text: ' Oops! \n\n' +
-          'In order to Record Directly from your Screen, we need Access to your Video Camera. \n\n ' +
-         ' Please Refresh this page and Click on Allow when prompted to.',
+            'In order to Record Directly from your Screen, we need Access to your Video Camera. \n\n ' +
+            ' Please Refresh this page and Click on Allow when prompted to.',
         icon: 'warning'})
     })
 }
@@ -746,13 +729,11 @@ function initializeClock (id, endtime) {
   console.log('Initializing the Clock Element')
   let minutesSpan = document.getElementById('minutes')
   let secondsSpan = document.getElementById('seconds')
-
   function updateClock () {
     endtime = endtime - 1000
     let t = getTimeRemaining(endtime)
     minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
     secondsSpan.innerHTML = ('0' + t.seconds).slice(-2)
-
     if (stopped === true) {
       clearInterval(timeinterval)
       minutesSpan.innerHTML = ('0' + t.minutes).slice(-2)
@@ -762,7 +743,6 @@ function initializeClock (id, endtime) {
       clearInterval(timeinterval)
     }
   }
-
   updateClock()
   let timeinterval = setInterval(updateClock, 1000)
 }
@@ -770,10 +750,8 @@ function getTimeRemaining (endtime) {
   let t = endtime
   let seconds = Math.floor((t / 1000) % 60)
   let minutes = Math.floor((t / 1000 / 60) % 60)
-
   let secondsUsedConnect = document.getElementById('secondsUsed')
   let minutesUsedConnect = document.getElementById('minutesUsed')
-
   let secondsUsed = ((totalTime - endtime) / 1000 % 60)
   let minutesUsed = ((Math.floor((totalTime / 1000 / 60) % 60)) - (Math.floor((endtime / 1000 / 60) % 60))) - 1
   if (minutesUsed === -1) {
@@ -792,7 +770,6 @@ function getTimeRemaining (endtime) {
     'seconds': seconds
   }
 }
-
 </script>
 
 <style scoped>
@@ -819,22 +796,18 @@ function getTimeRemaining (endtime) {
     display: flex;
     flex-direction: row;
   }
-
   #clockTimerDiv {
     display: flex;
     flex-direction: column;
   }
-
   #divRecordStory {
     display: flex;
     flex-direction: column;
   }
-
   #saveStoryDiv {
     display: flex;
     flex-direction: column;
   }
-
   /*body {
     text-align: center;
     background: #00ECB9;
@@ -851,7 +824,6 @@ function getTimeRemaining (endtime) {
       margin-left: 10px;
       color: cornflowerblue;
     }*/
-
   h3 {
     font-size: 15pt;
     font-weight: 100;
@@ -859,11 +831,9 @@ function getTimeRemaining (endtime) {
     text-align: center;
     color: cornflowerblue;
   }
-
   #tabButtons {
     margin-bottom: 5px;
   }
-
   #clockdiv {
     font-family: sans-serif;
     color: #fff;
@@ -884,7 +854,6 @@ function getTimeRemaining (endtime) {
     background: skyblue;
     display: inline-block;
   }
-
   #clockdiv2 {
     font-family: sans-serif;
     color: #fff;
@@ -905,7 +874,6 @@ function getTimeRemaining (endtime) {
     background: #62ecfb;
     display: inline-block;
   }
-
   .smalltext {
     padding-top: 5px;
     font-size: 16px;
