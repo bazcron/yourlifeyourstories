@@ -15,8 +15,8 @@
         <td width="50%" height="100%">
           <div class="embed-responsive embed-responsive-16by9">
             <video   style="width:100%; height: 100%; object-fit: cover;" controls>
-<!--              <source src="./../assets/IntroVideo.mp4"  allowfullscreen/>-->
-              <source src="./../IntroVideo.webm"  allowfullscreen/>
+<!--            <source src="./../assets/IntroVideo.mp4"  allowfullscreen/>-->
+              <source src="./../assets/IntroVideo.webm" allowfullscreen/>
             </video> >
           </div>
         </td>

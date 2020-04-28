@@ -201,6 +201,7 @@ export default {
             console.log(' response data ' + response.data)
           }
           // adds all video details and displays them on the screen.......................
+          this.resultArray = []
           this.resultArray.push(...response.data)
         }, err => {
           console.log(err.response)
@@ -219,7 +220,7 @@ export default {
           console.log(err.response)
           this.NoVideosReturned = err.response.data.error
         })
-      } else if (storyCountryText !== 'Country' && storyDecadeText !== 'Category') {
+      } /* else if (storyCountryText !== 'Country' && storyDecadeText !== 'Category') {
         console.log('..' + storyCountryText + '..' + storyDecadeText + '..')
         searchOptions = storyCountryText + ',' + storyDecadeText
         searchForVideos.getVideosBasedOnCountryDecade(searchOptions).then(response => { // .then(response => response.json())
@@ -284,8 +285,8 @@ export default {
         }, err => {
           console.log(err.response)
           this.NoVideosReturned = err.response.data.error
-        })
-      }
+        }) */
+      // }
     },
     getSelectedLanguage: function (language) { // gets a the language value from dropdown list
       console.log(language)
