@@ -16,7 +16,7 @@
   },
   "dependencies": {
     "@syncfusion/ej2-vue-dropdowns": "^18.1.43",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "babel-polyfill": "^6.26.0",
     "bootstrap-vue": "^2.1.0",
     "console": "^0.7.2",
